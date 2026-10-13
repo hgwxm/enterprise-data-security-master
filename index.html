@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>访问控制台 · AegisData 企业数据安全管理平台</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-page="console">
+
+<!-- ══════════ 侧边栏 ══════════ -->
+<aside class="sidebar">
+  <a class="brand" href="#console">
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 16.2l3.4 3.4L21.5 13" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand__text">
+      <b>AegisData</b>
+      <span>企业数据安全管理平台</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="主导航">
+    <p class="nav__group">数据访问</p>
+    <a class="nav__item is-active" href="#console" aria-current="page">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span>访问控制台</span>
+    </a>
+    <a class="nav__item" href="#audit">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>审计日志</span>
+      <i class="nav__count" id="navCount">0</i>
+    </a>
+
+    <p class="nav__group">策略与说明</p>
+    <a class="nav__item" href="#rules">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.8" y="3.2" width="14.4" height="13.6" rx="2.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2.8 7.6h14.4M8 7.6v9.2" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>权限规则</span>
+    </a>
+    <a class="nav__item" href="about.html">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 9v4.4M10 6.6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>系统说明</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__foot">
+    <div class="stage">
+      <span class="stage__dot"></span>
+      <div>
+        <b>第一阶段 · 演示环境</b>
+        <span>全部为虚构数据，不含真实企业信息</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════ 主区域 ══════════ -->
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>数据访问</span><span class="sep">/</span><b>访问控制台</b>
+      </nav>
+      <h1>访问控制台</h1>
+      <p>选择申请者的角色、目标文件与操作类型，AegisData 会在任何文件操作发生<strong>之前</strong>完成权限判定，并把判定与实际执行结果一并写入审计日志。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok">
+        <span class="chip__pulse"></span>策略引擎在线
+      </span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ── 左列 ── -->
+    <div class="col">
+
+      <!-- 访问申请表单 -->
+      <section class="card card--form" id="request">
+        <div class="card__head">
+          <h2>访问申请</h2>
+          <span class="hint">所有受保护操作必须经过统一入口判定</span>
+        </div>
+
+        <form class="form" id="requestForm" autocomplete="off">
+          <div class="field">
+            <label for="role">用户角色</label>
+            <div class="select">
+              <select id="role" name="user_role">
+                <option value="employee">普通员工 · employee</option>
+                <option value="finance">财务人员 · finance</option>
+                <option value="admin">管理员 · admin</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="file">文件编号</label>
+            <div class="select">
+              <select id="file" name="file_id">
+                <option value="F001">F001 · 普通业务报告</option>
+                <option value="F002">F002 · 内部财务报告</option>
+                <option value="F003">F003 · 敏感工资表</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="action">操作类型</label>
+            <div class="select">
+              <select id="action" name="action">
+                <option value="read">读取</option>
+                <option value="export">导出</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn btn--primary" type="submit" id="submitBtn">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M3 10h11M10 5.4 14.6 10 10 14.6" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>提交申请</span>
+          </button>
+        </form>
+
+        <div class="quick">
+          <span class="quick__label">快速验证</span>
+          <button class="tbtn" type="button" data-r="employee" data-f="F001" data-a="read">员工读普通报告</button>
+          <button class="tbtn" type="button" data-r="employee" data-f="F002" data-a="read">员工读财务报告</button>
+          <button class="tbtn" type="button" data-r="employee" data-f="F002" data-a="export">员工导出财务报告</button>
+          <button class="tbtn" type="button" data-r="finance" data-f="F003" data-a="read">财务读工资表</button>
+          <button class="tbtn" type="button" data-r="admin" data-f="F003" data-a="read">管理员读工资表</button>
+        </div>
+      </section>
+
+      <!-- 判定结果 -->
+      <section class="card card--result is-allow" id="result" data-decision="ALLOW">
+        <div class="result__top">
+          <div class="verdict">
+            <span class="verdict__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.6l4.4 4.4L19 7.4" stroke="currentColor" stroke-width="2.4"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="verdict__text">
+              <b id="verdictTitle">操作允许</b>
+              <span id="verdictSub">权限检查通过，文件操作已在受控流程中执行</span>
+            </div>
+          </div>
+          <span class="badge" id="decisionBadge">ALLOW</span>
+        </div>
+
+        <dl class="kv">
+          <div><dt>请求编号</dt><dd class="mono" id="kvRequestId">—</dd></div>
+          <div><dt>判定结果</dt><dd id="kvDecision">ALLOW</dd></div>
+          <div><dt>用户角色</dt><dd id="kvRole">—</dd></div>
+          <div><dt>判定原因</dt><dd id="kvReason">—</dd></div>
+          <div><dt>目标文件</dt><dd id="kvFile">—</dd></div>
+          <div><dt>实际执行状态</dt><dd id="kvExecuted">—</dd></div>
+          <div><dt>操作类型</dt><dd id="kvAction">—</dd></div>
+          <div><dt>判定时间</dt><dd class="mono" id="kvTime">—</dd></div>
+        </dl>
+
+        <!-- 拦截证据条 -->
+        <div class="proof" id="proof">
+          <span class="proof__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3.5 20.5 19h-17L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M12 9.6v4M12 16.2h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="proof__text">
+            <b id="proofTitle">文件操作已执行</b>
+            <span id="proofDesc">判定为 ALLOW，操作已在受控流程中完成，实际结果已写入审计日志。</span>
+          </div>
+        </div>
+
+        <div class="result__acts">
+          <button class="btn btn--ghost" type="button" id="btnView" disabled>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M2.5 10S5.4 4.8 10 4.8 17.5 10 17.5 10 14.6 15.2 10 15.2 2.5 10 2.5 10Z"
+                    stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="10" cy="10" r="2.2" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            查看文件内容
+          </button>
+          <button class="btn btn--ghost" type="button" id="btnExport" disabled>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 3v9M6.4 8.6 10 12.2l3.6-3.6M4 15.5h12" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            下载文件
+          </button>
+          <span class="result__note" id="resultNote"></span>
+        </div>
+      </section>
+
+      <!-- 最近记录 -->
+      <section class="card card--table" id="history">
+        <div class="card__head">
+          <h2>最近访问记录</h2>
+          <div class="card__tools">
+            <label class="search">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9" r="5.3" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M13 13l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <input type="search" id="search" placeholder="搜索请求编号 / 文件编号">
+            </label>
+            <a class="btn btn--ghost btn--sm" href="#audit">
+              查看全部日志
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11M11 5.4 15.6 10 11 14.6" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>请求编号</th>
+                <th>角色</th>
+                <th>文件</th>
+                <th>操作</th>
+                <th>判定</th>
+                <th>原因</th>
+                <th class="ta-c">实际执行</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── 右列 ── -->
+    <div class="col col--side">
+
+      <!-- 权限矩阵 -->
+      <section class="card card--matrix" id="matrix">
+        <div class="card__head">
+          <h2>角色权限矩阵</h2>
+          <a class="hint" href="#rules">查看规则详情 →</a>
+        </div>
+        <p class="matrix__note">每格显示该角色对该文件的<strong>读取 / 导出</strong>两项判定。</p>
+
+        <div class="matrix" role="table" aria-label="角色权限矩阵">
+          <div class="matrix__row matrix__row--head" role="row">
+            <span role="columnheader">角色 \ 文件</span>
+            <span role="columnheader">F001</span>
+            <span role="columnheader">F002</span>
+            <span role="columnheader">F003</span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>employee</b><i>普通员工</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--pending">导 审批</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>finance</b><i>财务人员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>admin</b><i>管理员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+          </div>
+        </div>
+
+        <ul class="legend">
+          <li><span class="dot dot--allow"></span><b>ALLOW</b>允许执行文件操作</li>
+          <li><span class="dot dot--deny"></span><b>DENY</b>禁止读取或导出</li>
+          <li><span class="dot dot--pending"></span><b>PENDING_APPROVAL</b>审批完成前不得执行</li>
+        </ul>
+      </section>
+
+      <!-- 演示路径 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>演示路径</h2>
+          <span class="hint">3 分钟讲清核心</span>
+        </div>
+        <ol class="notes">
+          <li>先用<strong>快速验证</strong>点一遍五条典型场景，看判定与"实际执行"是否一致。</li>
+          <li>重点看 <code>employee + F002 + 读取</code>：判定 DENY，并证明文件操作没有执行。</li>
+          <li>再对比 <code>employee + F002 + 导出</code>：同样不放行，但走审批流程。</li>
+          <li>到<strong>审计日志</strong>页按判定筛选，核对每条记录都有原因和真实执行状态。</li>
+          <li>最后到<strong>权限规则</strong>页说明这些组合是怎么定出来的。</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- 结果播报（读屏） -->
+<p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+<script src="../static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>权限规则 · AegisData 企业数据安全管理平台</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-page="rules">
+
+<aside class="sidebar">
+  <a class="brand" href="#console">
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 16.2l3.4 3.4L21.5 13" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand__text">
+      <b>AegisData</b>
+      <span>企业数据安全管理平台</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="主导航">
+    <p class="nav__group">数据访问</p>
+    <a class="nav__item" href="#console">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span>访问控制台</span>
+    </a>
+    <a class="nav__item" href="#audit">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>审计日志</span>
+      <i class="nav__count" id="navCount">0</i>
+    </a>
+
+    <p class="nav__group">策略与说明</p>
+    <a class="nav__item is-active" href="#rules" aria-current="page">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.8" y="3.2" width="14.4" height="13.6" rx="2.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2.8 7.6h14.4M8 7.6v9.2" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>权限规则</span>
+    </a>
+    <a class="nav__item" href="#about">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 9v4.4M10 6.6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>系统说明</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__foot">
+    <div class="stage">
+      <span class="stage__dot"></span>
+      <div>
+        <b>第一阶段 · 演示环境</b>
+        <span>全部为虚构数据，不含真实企业信息</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>策略与说明</span><span class="sep">/</span><b>权限规则</b>
+      </nav>
+      <h1>权限规则</h1>
+      <p>本页是系统的<strong>唯一规则来源</strong>：3 个角色 × 3 个文件 × 2 种操作，共 18 条组合。判定逻辑与页面展示分离，页面只负责把结果如实呈现出来。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok"><span class="chip__pulse"></span>规则版本 v1.0</span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="col">
+
+      <!-- 权限矩阵 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>角色权限矩阵</h2>
+          <span class="hint">读 = read，导 = export</span>
+        </div>
+        <p class="matrix__note">每一格显示该角色对该文件的 <strong>读取 / 导出</strong> 两项判定，共 18 条组合。</p>
+
+        <div class="matrix" role="table" aria-label="角色权限矩阵">
+          <div class="matrix__row matrix__row--head" role="row">
+            <span role="columnheader">角色 \ 文件</span>
+            <span role="columnheader">F001 普通业务报告</span>
+            <span role="columnheader">F002 内部财务报告</span>
+            <span role="columnheader">F003 敏感工资表</span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>employee</b><i>普通员工</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--pending">导 审批</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>finance</b><i>财务人员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>admin</b><i>管理员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+          </div>
+        </div>
+
+        <div class="code-note">
+          为什么 employee 读 F002 是 DENY，导出 F002 却是 PENDING_APPROVAL？
+          因为系统为读取和导出设了两种不同策略：读取直接拒绝，导出进入审批流程。
+          但<strong>只要不是 ALLOW，文件操作就不能执行</strong>。
+        </div>
+      </section>
+
+      <!-- 决策含义 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>三种决策的含义</h2>
+          <span class="hint">这是评审最常追问的一处</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:190px">决策</th>
+                <th>含义</th>
+                <th style="width:230px">是否执行文件操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag tag--allow">ALLOW</span></td>
+                <td>权限检查通过</td>
+                <td>是，执行成功后记录实际结果</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag--deny">DENY</span></td>
+                <td>权限不足或规则不允许</td>
+                <td>否，在文件操作之前拦截</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag--pending">PENDING_APPROVAL</span></td>
+                <td>操作需要人工审批</td>
+                <td>否，审批完成前不得执行</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 接口约定 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>判定接口约定</h2>
+          <span class="hint">A 侧函数 / B 侧接口</span>
+        </div>
+
+        <pre class="code"><span class="c"># policy.py —— 权限判断函数（由 A 负责实现）</span>
+<span class="k">def</span> <span class="f">check_permission</span>(user_role, file_id, action):
+    <span class="c"># user_role: employee | finance | admin</span>
+    <span class="c"># file_id:   F001 | F002 | F003</span>
+    <span class="c"># action:    read | export</span>
+    <span class="k">return</span> {
+        <span class="s">"decision"</span>: <span class="s">"ALLOW"</span>,             <span class="c"># ALLOW | DENY | PENDING_APPROVAL</span>
+        <span class="s">"reason"</span>:   <span class="s">"该角色对该文件有读取权限"</span>,
+    }</pre>
+
+        <div class="code-note">前端页面只消费这个返回结构，不参与规则判断。</div>
+
+        <pre class="code"><span class="c">// POST /api/access —— 统一访问入口（由 B 负责实现）</span>
+{
+  <span class="s">"user_role"</span>: <span class="s">"employee"</span>,
+  <span class="s">"file_id"</span>:   <span class="s">"F002"</span>,
+  <span class="s">"action"</span>:    <span class="s">"read"</span>
+}
+
+<span class="c">// 返回</span>
+{
+  <span class="s">"request_id"</span>: <span class="s">"REQ20261012103025"</span>,
+  <span class="s">"decision"</span>:   <span class="s">"DENY"</span>,
+  <span class="s">"reason"</span>:     <span class="s">"普通员工无权访问内部财务报告"</span>,
+  <span class="s">"executed"</span>:   <span class="k">false</span>          <span class="c">// 必须反映真实执行情况</span>
+}</pre>
+      </section>
+    </div>
+
+    <!-- 右列 -->
+    <div class="col col--side">
+
+      <section class="card">
+        <div class="card__head">
+          <h2>受保护文件</h2>
+          <span class="hint">3 个</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F001 · 普通业务报告</b>
+              <span class="mono">monthly_business_report.txt</span>
+              <span>虚构销售额、订单量、业务情况 · <b>INTERNAL</b></span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F002 · 内部财务报告</b>
+              <span class="mono">monthly_finance_report.txt</span>
+              <span>虚构收入、支出、预算差异 · <b>CONFIDENTIAL</b></span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F003 · 敏感工资表</b>
+              <span class="mono">salary_data.txt</span>
+              <span>虚构员工标识及工资金额 · <b>SENSITIVE</b></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>统一测试用例</h2>
+          <span class="hint">T001 – T008</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:58px">编号</th>
+                <th>角色 / 文件 / 操作</th>
+                <th style="width:104px">预期判定</th>
+                <th class="ta-c" style="width:66px">执行</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">T001</td><td>employee · F001 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+              <tr><td class="mono">T002</td><td>employee · F002 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T003</td><td>employee · F003 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T004</td><td>finance · F002 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+              <tr><td class="mono">T005</td><td>finance · F003 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T006</td><td>employee · F002 · export</td><td><span class="tag tag--pending">待审批</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T007</td><td>employee · F003 · export</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T008</td><td>admin · F003 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-note">
+          测试完成后必须填写实际判定、实际执行状态与是否通过；预期结果不能直接当作实际测试结果。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>额外安全规则</h2>
+        </div>
+        <ol class="notes">
+          <li>未知用户角色、未知文件编号、未知操作类型<strong>不得默认放行</strong>。</li>
+          <li>文件不存在时，应安全报错，不得执行读取或导出。</li>
+          <li>权限判断与实际文件操作<strong>必须分离</strong>。</li>
+          <li>所有受保护操作必须经过后端统一入口。</li>
+          <li>不能只在网页上显示"拒绝"，而实际仍然读取或导出文件。</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../static/app.js"></script>
+</body>
+</html>

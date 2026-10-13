@@ -1,0 +1,2747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AegisData · 企业数据安全管理平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z' fill='%231e40af'/%3E%3Cpath d='M11 16.2l3.4 3.4L21.5 13' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   AegisData · 企业数据安全管理平台
+   第一阶段前端初稿样式
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 设计令牌 ── */
+:root {
+  /* 中性色 */
+  --bg:            #eef1f6;
+  --bg-deep:       #0b1220;
+  --surface:       #ffffff;
+  --surface-soft:  #f7f9fc;
+  --line:          #e4e9f1;
+  --line-soft:     #eef2f7;
+
+  /* 文字 */
+  --ink:           #0f172a;
+  --ink-2:         #475569;
+  --ink-3:         #8593a8;
+
+  /* 品牌 */
+  --brand:         #1e40af;
+  --brand-2:       #2563eb;
+  --brand-soft:    #eaf0ff;
+  --brand-line:    #c9d9ff;
+
+  --gold:          #b98a2e;
+
+  /* 状态 */
+  --allow:         #067647;
+  --allow-bg:      #e8f6ef;
+  --allow-line:    #b7e3cd;
+
+  --deny:          #b42318;
+  --deny-bg:       #fdeceb;
+  --deny-line:     #f6c9c5;
+
+  --pending:       #b25e09;
+  --pending-bg:    #fdf3e3;
+  --pending-line:  #f4dcb0;
+
+  /* 几何 */
+  --r-sm: 8px;
+  --r:    12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .05);
+  --shadow:    0 2px 4px -2px rgba(15, 23, 42, .06), 0 10px 26px -14px rgba(15, 23, 42, .22);
+  --shadow-lg: 0 24px 60px -28px rgba(15, 23, 42, .38);
+
+  --font: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui,
+          -apple-system, "PingFang SC", "Hiragino Sans GB",
+          "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  --mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, "SF Mono",
+          Consolas, "Courier New", monospace;
+
+  --sidebar-w: 258px;
+}
+
+/* ── 基础 ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* 防止任何子元素把整页撑出横向滚动条 */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+b, strong { font-weight: 600; }
+button, input, select { font: inherit; color: inherit; }
+svg { display: block; }
+
+.mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: -.1px; }
+.ta-c { text-align: center; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ══════════ 侧边栏 ══════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  flex: 0 0 var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 22px 16px;
+  color: #cfd9ea;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(37, 99, 235, .22), transparent 58%),
+    radial-gradient(90% 70% at 100% 100%, rgba(185, 138, 46, .12), transparent 60%),
+    linear-gradient(178deg, #101a2e 0%, #0b1220 62%, #0a101c 100%);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; padding: 4px 6px 0; }
+
+.brand__mark {
+  width: 40px; height: 40px;
+  flex: 0 0 40px;
+  display: grid; place-items: center;
+  color: #dbe6fb;
+  border-radius: 11px;
+  background: linear-gradient(150deg, rgba(59, 130, 246, .34), rgba(30, 64, 175, .5));
+  border: 1px solid rgba(147, 180, 250, .3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+.brand__mark svg { width: 23px; height: 23px; }
+
+.brand__text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.brand__text b {
+  font-size: 16px; font-weight: 650; letter-spacing: .2px; color: #fff;
+}
+.brand__text span { font-size: 11.5px; color: #8fa3c2; letter-spacing: .3px; }
+
+.nav { display: flex; flex-direction: column; gap: 3px; }
+
+.nav__group {
+  font-size: 10.5px; font-weight: 600; letter-spacing: .13em;
+  text-transform: uppercase; color: #61748f;
+  padding: 0 10px; margin: 14px 0 6px;
+}
+.nav__group:first-child { margin-top: 0; }
+
+.nav__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  font-size: 13.5px;
+  color: #b9c7dd;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background .16s, color .16s, border-color .16s;
+}
+.nav__item svg { width: 17px; height: 17px; flex: 0 0 17px; opacity: .82; }
+.nav__item:hover { background: rgba(255, 255, 255, .055); color: #eaf0fa; }
+
+.nav__item.is-active {
+  color: #fff;
+  background: linear-gradient(96deg, rgba(37, 99, 235, .46), rgba(37, 99, 235, .16));
+  border-color: rgba(129, 166, 247, .34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+}
+.nav__item.is-active svg { opacity: 1; }
+
+.nav__count {
+  margin-left: auto;
+  font-style: normal; font-size: 11px; font-weight: 600;
+  padding: 1px 7px; border-radius: 999px;
+  color: #cfe0ff; background: rgba(255, 255, 255, .12);
+}
+
+.sidebar__foot { margin-top: auto; }
+
+.stage {
+  display: flex; gap: 9px; align-items: flex-start;
+  padding: 12px;
+  border-radius: var(--r);
+  background: rgba(255, 255, 255, .045);
+  border: 1px solid rgba(255, 255, 255, .08);
+}
+.stage__dot {
+  width: 7px; height: 7px; flex: 0 0 7px; margin-top: 6px;
+  border-radius: 50%; background: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, .18);
+}
+.stage b { display: block; font-size: 12px; color: #e3ebf7; }
+.stage span { display: block; font-size: 11px; color: #7f91ad; line-height: 1.5; }
+
+/* ══════════ 主区域 ══════════ */
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 26px 30px 46px;
+}
+
+/* ── 顶栏 ── */
+.topbar {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 26px; flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+/* flex 子项默认 min-width:auto，窄屏下会被长文本撑破容器，必须显式归零 */
+.topbar__head { min-width: 0; flex: 1 1 340px; }
+.topbar__head h1 {
+  font-size: 25px; font-weight: 650; letter-spacing: -.4px;
+}
+.topbar__head p {
+  margin-top: 6px; max-width: 62ch;
+  font-size: 13.5px; color: var(--ink-2);
+}
+.topbar__head strong { color: var(--ink); font-weight: 600; }
+
+.topbar__side { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 550;
+}
+.chip--ok {
+  color: var(--allow);
+  background: var(--allow-bg);
+  border: 1px solid var(--allow-line);
+}
+.chip__pulse {
+  width: 7px; height: 7px; border-radius: 50%; background: #12b76a;
+  box-shadow: 0 0 0 0 rgba(18, 183, 106, .5);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(18, 183, 106, .45); }
+  70%  { box-shadow: 0 0 0 8px rgba(18, 183, 106, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(18, 183, 106, 0); }
+}
+
+.whoami {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 13px 6px 7px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.whoami__avatar {
+  width: 30px; height: 30px; flex: 0 0 30px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 13px; font-weight: 650; color: #fff;
+  background: linear-gradient(150deg, #3b82f6, #1e40af);
+}
+.whoami b { display: block; font-size: 12.5px; line-height: 1.3; }
+.whoami span { display: block; font-size: 11px; color: var(--ink-3); line-height: 1.3; }
+
+/* ── 栅格 ── */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 372px;
+  gap: 20px;
+  align-items: start;
+}
+.col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+@media (max-width: 1220px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .col--side { flex-direction: row; flex-wrap: wrap; }
+  .col--side > .card { flex: 1 1 340px; }
+}
+
+/* ── 卡片 ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.card__head h2 {
+  font-size: 14.5px; font-weight: 650; letter-spacing: -.1px;
+  display: flex; align-items: center; gap: 9px;
+  min-width: 0;
+}
+.card__head h2::before {
+  content: ""; width: 3px; height: 15px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--brand-2), var(--brand));
+}
+.hint { font-size: 12px; color: var(--ink-3); }
+.card__tools { display: flex; align-items: center; gap: 9px; }
+
+/* ══════════ 表单 ══════════ */
+.form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 14px;
+  align-items: end;
+  padding: 20px;
+}
+@media (max-width: 900px) {
+  .form { grid-template-columns: minmax(0, 1fr); }
+}
+
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.field label { font-size: 12.5px; font-weight: 550; color: var(--ink-2); }
+
+.select { position: relative; }
+.select::after {
+  content: ""; position: absolute; right: 13px; top: 50%;
+  width: 7px; height: 7px; margin-top: -5px;
+  border-right: 1.7px solid var(--ink-3);
+  border-bottom: 1.7px solid var(--ink-3);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.select select {
+  appearance: none; -webkit-appearance: none;
+  width: 100%;
+  padding: 10px 34px 10px 13px;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  font-size: 13.5px; font-weight: 500;
+  cursor: pointer;
+  transition: border-color .16s, box-shadow .16s, background .16s;
+}
+.select select:hover { border-color: #cfd8e6; background: #fff; }
+.select select:focus {
+  outline: none;
+  border-color: var(--brand-2);
+  background: #fff;
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, .13);
+}
+
+/* ── 按钮 ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px 18px;
+  border-radius: var(--r);
+  border: 1px solid transparent;
+  font-size: 13.5px; font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .1s, background .16s, border-color .16s,
+              color .16s, box-shadow .16s, opacity .16s;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+  color: #fff;
+  background: linear-gradient(180deg, var(--brand-2), var(--brand));
+  border-color: #1d4ed8;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .18), 0 8px 20px -12px rgba(30, 64, 175, .75);
+}
+.btn--primary:hover { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.btn--primary[disabled] { opacity: .6; cursor: progress; }
+
+.btn--ghost {
+  color: var(--ink-2);
+  background: var(--surface);
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.btn--ghost:hover:not([disabled]) {
+  color: var(--brand);
+  border-color: var(--brand-line);
+  background: var(--brand-soft);
+}
+.btn--ghost[disabled] { opacity: .5; cursor: not-allowed; }
+.btn--sm { padding: 7px 13px; font-size: 12.5px; }
+
+/* ── 快速验证 ── */
+.quick {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 13px 20px 17px;
+  border-top: 1px dashed var(--line);
+}
+.quick__label {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+  color: var(--ink-3); margin-right: 2px;
+}
+.tbtn {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  font-size: 12.5px; color: var(--ink-2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.tbtn:hover {
+  color: var(--brand); border-color: var(--brand-line);
+  background: var(--brand-soft);
+}
+
+/* ══════════ 判定结果 ══════════ */
+.card--result {
+  position: relative;
+  padding: 20px;
+  border-left: 4px solid var(--accent-line, var(--allow-line));
+  background:
+    linear-gradient(180deg, var(--accent-bg, var(--allow-bg)) 0%, rgba(255, 255, 255, 0) 132px),
+    var(--surface);
+}
+
+.card--result.is-allow {
+  --accent: var(--allow); --accent-bg: var(--allow-bg);
+  --accent-line: #12b76a; --accent-soft: #f2fbf6;
+}
+.card--result.is-deny {
+  --accent: var(--deny); --accent-bg: var(--deny-bg);
+  --accent-line: #f04438; --accent-soft: #fef6f5;
+}
+.card--result.is-pending {
+  --accent: var(--pending); --accent-bg: var(--pending-bg);
+  --accent-line: #f79009; --accent-soft: #fffaf2;
+}
+
+.card--result.is-flash { animation: flash .5s ease-out; }
+@keyframes flash {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 34%, transparent); }
+  100% { box-shadow: 0 0 0 14px transparent; }
+}
+
+.result__top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.verdict { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+.verdict__icon {
+  width: 46px; height: 46px; flex: 0 0 46px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  color: var(--accent);
+  background: #fff;
+  border: 1px solid var(--accent-line);
+  box-shadow: 0 6px 16px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.verdict__icon svg { width: 25px; height: 25px; }
+
+.verdict__text b {
+  display: block;
+  font-size: 20px; font-weight: 650; letter-spacing: -.3px;
+  color: var(--accent);
+  line-height: 1.3;
+}
+.verdict__text span { display: block; font-size: 13px; color: var(--ink-2); }
+
+.badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12.5px; font-weight: 600; letter-spacing: .04em;
+  color: var(--accent);
+  background: #fff;
+  border: 1px solid var(--accent-line);
+}
+
+/* 键值表 */
+.kv {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.kv > div {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+}
+.kv dt {
+  flex: 0 0 84px;
+  font-size: 12.5px; color: var(--ink-3);
+}
+.kv dd {
+  flex: 1 1 auto; min-width: 0;
+  font-size: 13.5px; font-weight: 500;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) { .kv { grid-template-columns: minmax(0, 1fr); } }
+
+/* 拦截证据条 */
+.proof {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-top: 16px;
+  padding: 13px 16px;
+  border-radius: var(--r);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+}
+.proof__icon { color: var(--accent); flex: 0 0 20px; margin-top: 1px; }
+.proof__icon svg { width: 20px; height: 20px; }
+.proof__text b { display: block; font-size: 13.5px; color: var(--accent); }
+.proof__text span { display: block; font-size: 12.5px; color: var(--ink-2); }
+
+.result__acts {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+.result__note { font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
+
+/* ══════════ 表格 ══════════ */
+.card--table .card__head { padding-bottom: 14px; }
+
+.search {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 12px;
+  border-radius: var(--r);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  transition: border-color .16s, box-shadow .16s, background .16s;
+}
+.search:focus-within {
+  background: #fff;
+  border-color: var(--brand-2);
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, .13);
+}
+.search svg { width: 15px; height: 15px; color: var(--ink-3); }
+.search input {
+  width: 190px; border: 0; background: none; outline: none;
+  font-size: 13px;
+}
+.filters .search input { width: 236px; }
+.search input::placeholder { color: var(--ink-3); }
+
+/* 表格容器：必须显式 width:100% + overflow-x:auto，
+   否则表格的固定列宽会把它撑开，进而把整页撑出横向滚动条 */
+.tablewrap { width: 100%; max-width: 100%; overflow-x: auto; }
+.tablewrap > .table { min-width: 720px; }
+.card--table .tablewrap > .table { min-width: 0; }
+
+.table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.table th {
+  padding: 10px 12px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .03em;
+  color: var(--ink-3);
+  text-align: left; white-space: nowrap;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 1;
+}
+.table td {
+  padding: 12px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+
+/* 列宽（table-layout: fixed） */
+.table th:nth-child(1), .table td:nth-child(1) { width: 116px; }  /* 时间 */
+.table th:nth-child(2), .table td:nth-child(2) { width: 152px; }  /* 请求编号 */
+.table th:nth-child(3), .table td:nth-child(3) { width: 88px;  }  /* 角色 */
+.table th:nth-child(4), .table td:nth-child(4) { width: 66px;  }  /* 文件 */
+.table th:nth-child(5), .table td:nth-child(5) { width: 58px;  }  /* 操作 */
+.table th:nth-child(6), .table td:nth-child(6) { width: 104px; }  /* 判定 */
+.table th:nth-child(8), .table td:nth-child(8) { width: 100px; }  /* 实际执行 */
+
+.table td.c-time { font-size: 11.5px; white-space: nowrap; }
+.table td.c-req  { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.table td.c-act  { white-space: nowrap; }
+
+/* 长代码标识符（如 check_permission）允许在符号处换行，避免撑破单元格 */
+.table td .mono, .table td code { overflow-wrap: anywhere; word-break: break-word; }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tbody tr { transition: background .14s; }
+.table tbody tr:hover { background: #f9fbfe; }
+.table tbody tr.is-new { animation: rowin .45s ease-out; }
+@keyframes rowin {
+  from { background: #eaf2ff; }
+  to   { background: transparent; }
+}
+.table .mono { color: var(--ink-2); }
+.table .reason {
+  color: var(--ink-2);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* 表格内小徽标 */
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+  white-space: nowrap;
+}
+.tag--allow   { color: var(--allow);   background: var(--allow-bg);   border: 1px solid var(--allow-line); }
+.tag--deny    { color: var(--deny);    background: var(--deny-bg);    border: 1px solid var(--deny-line); }
+.tag--pending { color: var(--pending); background: var(--pending-bg); border: 1px solid var(--pending-line); }
+
+.tag-code {
+  display: inline-block;
+  padding: 2px 8px; border-radius: 6px;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  color: var(--ink-2); background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.exec { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 550; white-space: nowrap; }
+.exec svg { width: 15px; height: 15px; }
+.exec--yes { color: var(--allow); }
+.exec--no  { color: var(--ink-3); }
+
+.empty {
+  padding: 34px 20px;
+  text-align: center;
+  font-size: 13px; color: var(--ink-3);
+}
+
+/* ══════════ 权限矩阵 ══════════ */
+.matrix__note {
+  padding: 13px 20px 0;
+  font-size: 12.5px; color: var(--ink-2);
+}
+.matrix__note strong { color: var(--ink); }
+
+.matrix {
+  padding: 14px 20px 4px;
+  display: flex; flex-direction: column;
+  gap: 8px;
+  max-width: 620px;
+}
+
+.matrix__row {
+  display: grid;
+  grid-template-columns: 92px repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  align-items: center;
+}
+.matrix__row--head span {
+  display: flex; align-items: center;
+  font-size: 11px; font-weight: 600; letter-spacing: 0;
+  color: var(--ink-3);
+  text-align: center;
+  white-space: nowrap;
+}
+.matrix__row--head span:nth-child(n+2) { justify-content: center; }
+.matrix__row--head span:first-child { text-align: left; justify-content: flex-start; font-size: 10px; }
+
+.matrix__role {
+  display: flex; flex-direction: column;
+  padding: 7px 9px;
+  border-radius: var(--r-sm);
+  background: var(--surface-soft);
+  border: 1px solid var(--line-soft);
+}
+.matrix__role b {
+  font-family: var(--mono);
+  font-size: 11.5px; font-weight: 600; color: var(--ink);
+  letter-spacing: -.2px;
+}
+.matrix__role i { font-style: normal; font-size: 10.5px; color: var(--ink-3); }
+
+.cell {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 7px 8px;
+  border-radius: var(--r-sm);
+  background: var(--surface-soft);
+  border: 1px solid var(--line-soft);
+}
+
+.pill {
+  display: block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-style: normal;
+  font-size: 11px; font-weight: 600; letter-spacing: .01em;
+  text-align: center;
+  white-space: nowrap;
+}
+.pill--allow   { color: var(--allow);   background: var(--allow-bg); }
+.pill--deny    { color: var(--deny);    background: var(--deny-bg); }
+.pill--pending { color: var(--pending); background: var(--pending-bg); }
+
+.legend {
+  display: flex; flex-direction: column; gap: 9px;
+  padding: 16px 20px 18px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line-soft);
+}
+.legend li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 12.5px; color: var(--ink-2);
+}
+.legend b {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .02em;
+  color: var(--ink);
+}
+.legend b::after { content: " · "; color: var(--ink-3); font-weight: 400; }
+
+.dot { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; }
+.dot--allow   { background: #12b76a; }
+.dot--deny    { background: #f04438; }
+.dot--pending { background: #f79009; }
+
+/* ══════════ 系统说明 ══════════ */
+.notes {
+  counter-reset: n;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 18px 20px;
+}
+.notes li {
+  counter-increment: n;
+  position: relative;
+  padding-left: 30px;
+  font-size: 12.8px; color: var(--ink-2);
+}
+.notes li::before {
+  content: counter(n);
+  position: absolute; left: 0; top: 1px;
+  width: 19px; height: 19px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 11px; font-weight: 650;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+}
+.notes strong { color: var(--ink); font-weight: 600; }
+.notes code {
+  font-family: var(--mono); font-size: 11.5px;
+  padding: 1px 6px; border-radius: 5px;
+  color: #334155; background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.disclaimer {
+  padding: 13px 20px 17px;
+  font-size: 11.8px; line-height: 1.6; color: var(--ink-3);
+  border-top: 1px dashed var(--line);
+  background: var(--surface-soft);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   多页站：页面级组件
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 通用小工具 ── */
+.stack   { display: flex; flex-direction: column; gap: 20px; }
+.mt-20   { margin-top: 20px; }
+.muted   { color: var(--ink-3); }
+
+.topbar__crumbs {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--ink-3);
+  margin-bottom: 9px;
+}
+.topbar__crumbs b { color: var(--ink-2); font-weight: 550; }
+.topbar__crumbs .sep { color: #c3cddc; }
+
+.topbar__acts { display: flex; align-items: center; gap: 9px; }
+.topbar__side { flex-wrap: wrap; justify-content: flex-end; }
+
+/* ── 统计卡 ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 1000px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .stats { grid-template-columns: minmax(0, 1fr); } }
+
+.stat {
+  position: relative;
+  padding: 15px 17px;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.stat::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
+  background: var(--accent, #cbd5e1);
+}
+.stat dt {
+  font-size: 12px; color: var(--ink-3);
+  display: flex; align-items: center; gap: 6px;
+}
+.stat dd {
+  margin: 6px 0 0;
+  font-size: 26px; font-weight: 650; letter-spacing: -.6px;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.stat__sub { display: block; margin-top: 3px; font-size: 11.5px; color: var(--ink-3); }
+.stat--allow   { --accent: #12b76a; }
+.stat--deny    { --accent: #f04438; }
+.stat--pending { --accent: #f79009; }
+.stat--all     { --accent: var(--brand-2); }
+
+/* ── 筛选栏 ── */
+.filters {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--surface-soft);
+}
+.filters__label { font-size: 12px; color: var(--ink-3); }
+.filters__grow  { flex: 1 1 auto; }
+
+.seg {
+  display: inline-flex; gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: #e9eef6;
+  border: 1px solid var(--line);
+}
+.seg__btn {
+  padding: 6px 13px;
+  border: 0; border-radius: 7px;
+  background: transparent;
+  font-size: 12.5px; font-weight: 550; color: var(--ink-2);
+  cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.seg__btn:hover { color: var(--ink); }
+.seg__btn[aria-pressed="true"] {
+  color: var(--brand);
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .13);
+}
+
+/* ── 表格行可点 ── */
+.table tbody tr.is-row { cursor: pointer; }
+.table tbody tr.is-row[aria-selected="true"] {
+  background: var(--brand-soft);
+  box-shadow: inset 3px 0 0 var(--brand-2);
+}
+.table tbody tr.is-row:focus-visible { outline-offset: -2px; }
+
+.linkbtn {
+  border: 0; background: none; padding: 0;
+  font-size: 12.5px; font-weight: 550; color: var(--brand-2);
+  cursor: pointer;
+}
+.linkbtn:hover { text-decoration: underline; }
+
+/* ── 详情抽屉（审计日志） ── */
+.drawer {
+  position: fixed; inset: 0 0 0 auto;
+  width: 408px; max-width: 92vw;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(102%);
+  transition: transform .26s cubic-bezier(.32, .72, 0, 1);
+  z-index: 40;
+}
+.drawer.is-open { transform: translateX(0); }
+
+.drawer__head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.drawer__head h3 { font-size: 15px; font-weight: 650; }
+.drawer__head p  { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
+
+.xbtn {
+  width: 30px; height: 30px; flex: 0 0 30px;
+  display: grid; place-items: center;
+  border-radius: 8px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink-3);
+  cursor: pointer;
+  transition: all .15s;
+}
+.xbtn:hover { color: var(--deny); border-color: var(--deny-line); background: var(--deny-bg); }
+.xbtn svg { width: 15px; height: 15px; }
+
+.drawer__body { flex: 1 1 auto; overflow-y: auto; padding: 18px 20px 26px; }
+.drawer__body section + section { margin-top: 22px; }
+.drawer__body h4 {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 10px;
+}
+.drawer__foot { padding: 14px 20px; border-top: 1px solid var(--line-soft); background: var(--surface-soft); }
+.drawer__foot p { font-size: 11.8px; color: var(--ink-3); line-height: 1.6; }
+
+.scrim {
+  position: fixed; inset: 0;
+  background: rgba(11, 18, 32, .42);
+  backdrop-filter: blur(1.5px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .26s, visibility .26s;
+  z-index: 39;
+}
+.scrim.is-open { opacity: 1; visibility: visible; }
+
+.dl { display: flex; flex-direction: column; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: var(--r); overflow: hidden; }
+.dl__row { display: flex; align-items: baseline; gap: 12px; padding: 9px 13px; background: var(--surface); }
+.dl__row dt { flex: 0 0 92px; font-size: 12.5px; color: var(--ink-3); }
+.dl__row dd { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
+
+/* ── 时间线（系统说明 / 阶段计划） ── */
+.roadmap { display: flex; flex-direction: column; gap: 0; padding: 4px 20px 20px; }
+
+.phase {
+  position: relative;
+  padding: 16px 0 16px 30px;
+  border-left: 2px solid var(--line);
+}
+.phase:last-child { border-left-color: transparent; }
+.phase::before {
+  content: ""; position: absolute; left: -7px; top: 22px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; border: 2.5px solid #cbd5e1;
+}
+.phase--done::before  { background: #12b76a; border-color: #12b76a; box-shadow: 0 0 0 3px rgba(18,183,106,.16); }
+.phase--now::before   { background: var(--brand-2); border-color: var(--brand-2); box-shadow: 0 0 0 4px rgba(37,99,235,.16); }
+.phase--next::before  { background: #fff; border-color: #cbd5e1; }
+
+.phase__no {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  color: var(--ink-3); letter-spacing: .04em;
+}
+.phase h4 { font-size: 14px; font-weight: 650; margin: 4px 0 6px; }
+.phase p  { font-size: 12.8px; color: var(--ink-2); }
+.phase__tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.phase--now h4 { color: var(--brand); }
+
+.chipx {
+  display: inline-block;
+  padding: 2.5px 9px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 550;
+  color: var(--ink-2); background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+/* ── 代码块 ── */
+.code {
+  margin: 0;
+  padding: 15px 17px;
+  border-radius: var(--r);
+  background: #0e1729;
+  border: 1px solid #1e2b45;
+  color: #cbd8ee;
+  font-family: var(--mono);
+  font-size: 12.3px; line-height: 1.75;
+  overflow-x: auto;
+  tab-size: 2;
+}
+.code .k { color: #7dd3fc; }   /* 关键字 */
+.code .s { color: #a5e6a5; }   /* 字符串 */
+.code .c { color: #6b7f9e; }   /* 注释 */
+.code .f { color: #fcd34d; }   /* 函数名 */
+
+.code-note {
+  padding: 10px 20px 16px;
+  font-size: 11.8px; color: var(--ink-3);
+}
+
+/* ── 文档型内容（交付物、字段说明） ── */
+.doclist { display: flex; flex-direction: column; }
+.doclist__item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.doclist__item:last-child { border-bottom: 0; }
+.doclist__ico {
+  width: 32px; height: 32px; flex: 0 0 32px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+}
+.doclist__ico svg { width: 16px; height: 16px; }
+.doclist__item b { display: block; font-size: 13px; }
+.doclist__item span { display: block; font-size: 12px; color: var(--ink-3); }
+.doclist__item .mono { font-size: 11.5px; color: var(--ink-2); }
+
+.tbl-code { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+
+/* 移动端：抽屉全宽 */
+@media (max-width: 520px) {
+  .drawer { width: 100%; }
+}
+
+/* ── 窄屏 ── */
+@media (max-width: 980px) {
+  body { flex-direction: column; }
+  .sidebar {
+    width: 100%; flex: 0 0 auto; height: auto; position: static;
+    flex-direction: row; align-items: center; gap: 12px;
+    padding: 12px 16px; overflow-x: auto;
+  }
+  /* 品牌区必须能被压缩，否则会把整页撑出横向滚动条 */
+  .brand { flex: 0 1 auto; min-width: 0; gap: 9px; padding: 0; }
+  .brand__mark { width: 34px; height: 34px; flex: 0 0 34px; }
+  .brand__mark svg { width: 19px; height: 19px; }
+  .brand__text { min-width: 0; }
+  .brand__text b { font-size: 14.5px; white-space: nowrap; }
+  .brand__text span { display: none; }          /* 窄屏只留产品名，副标题省掉 */
+  .nav { flex-direction: row; gap: 2px; margin-left: auto; flex: 0 0 auto; }
+  .nav__group { display: none; }
+  .nav__item span { display: none; }
+  .nav__item { padding: 8px; }
+  .nav__count { display: none; }
+  .sidebar__foot { display: none; }
+  .main { padding: 20px 18px 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body data-page="console" data-single="1">
+
+<aside class="sidebar">
+  <a class="brand" href="#console">
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 16.2l3.4 3.4L21.5 13" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand__text">
+      <b>AegisData</b>
+      <span>企业数据安全管理平台</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="主导航">
+    <p class="nav__group">数据访问</p>
+    <a class="nav__item" href="#console" data-nav="console" data-nav="console">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span>访问控制台</span>
+    </a>
+    <a class="nav__item" href="#audit" data-nav="audit">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>审计日志</span>
+      <i class="nav__count" id="navCount">0</i>
+    </a>
+
+    <p class="nav__group">策略与说明</p>
+    <a class="nav__item" href="#rules" data-nav="rules">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.8" y="3.2" width="14.4" height="13.6" rx="2.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2.8 7.6h14.4M8 7.6v9.2" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>权限规则</span>
+    </a>
+    <a class="nav__item" href="#about" data-nav="about">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 9v4.4M10 6.6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>系统说明</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__foot">
+    <div class="stage">
+      <span class="stage__dot"></span>
+      <div>
+        <b>第一阶段 · 演示环境</b>
+        <span>全部为虚构数据，不含真实企业信息</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="pages">
+<div class="page" data-page-section="console">
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>数据访问</span><span class="sep">/</span><b>访问控制台</b>
+      </nav>
+      <h1>访问控制台</h1>
+      <p>选择申请者的角色、目标文件与操作类型，AegisData 会在任何文件操作发生<strong>之前</strong>完成权限判定，并把判定与实际执行结果一并写入审计日志。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok">
+        <span class="chip__pulse"></span>策略引擎在线
+      </span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ── 左列 ── -->
+    <div class="col">
+
+      <!-- 访问申请表单 -->
+      <section class="card card--form" id="request">
+        <div class="card__head">
+          <h2>访问申请</h2>
+          <span class="hint">所有受保护操作必须经过统一入口判定</span>
+        </div>
+
+        <form class="form" id="requestForm" autocomplete="off">
+          <div class="field">
+            <label for="role">用户角色</label>
+            <div class="select">
+              <select id="role" name="user_role">
+                <option value="employee">普通员工 · employee</option>
+                <option value="finance">财务人员 · finance</option>
+                <option value="admin">管理员 · admin</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="file">文件编号</label>
+            <div class="select">
+              <select id="file" name="file_id">
+                <option value="F001">F001 · 普通业务报告</option>
+                <option value="F002">F002 · 内部财务报告</option>
+                <option value="F003">F003 · 敏感工资表</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="action">操作类型</label>
+            <div class="select">
+              <select id="action" name="action">
+                <option value="read">读取</option>
+                <option value="export">导出</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn btn--primary" type="submit" id="submitBtn">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M3 10h11M10 5.4 14.6 10 10 14.6" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>提交申请</span>
+          </button>
+        </form>
+
+        <div class="quick">
+          <span class="quick__label">快速验证</span>
+          <button class="tbtn" type="button" data-r="employee" data-f="F001" data-a="read">员工读普通报告</button>
+          <button class="tbtn" type="button" data-r="employee" data-f="F002" data-a="read">员工读财务报告</button>
+          <button class="tbtn" type="button" data-r="employee" data-f="F002" data-a="export">员工导出财务报告</button>
+          <button class="tbtn" type="button" data-r="finance" data-f="F003" data-a="read">财务读工资表</button>
+          <button class="tbtn" type="button" data-r="admin" data-f="F003" data-a="read">管理员读工资表</button>
+        </div>
+      </section>
+
+      <!-- 判定结果 -->
+      <section class="card card--result is-allow" id="result" data-decision="ALLOW">
+        <div class="result__top">
+          <div class="verdict">
+            <span class="verdict__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.6l4.4 4.4L19 7.4" stroke="currentColor" stroke-width="2.4"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="verdict__text">
+              <b id="verdictTitle">操作允许</b>
+              <span id="verdictSub">权限检查通过，文件操作已在受控流程中执行</span>
+            </div>
+          </div>
+          <span class="badge" id="decisionBadge">ALLOW</span>
+        </div>
+
+        <dl class="kv">
+          <div><dt>请求编号</dt><dd class="mono" id="kvRequestId">—</dd></div>
+          <div><dt>判定结果</dt><dd id="kvDecision">ALLOW</dd></div>
+          <div><dt>用户角色</dt><dd id="kvRole">—</dd></div>
+          <div><dt>判定原因</dt><dd id="kvReason">—</dd></div>
+          <div><dt>目标文件</dt><dd id="kvFile">—</dd></div>
+          <div><dt>实际执行状态</dt><dd id="kvExecuted">—</dd></div>
+          <div><dt>操作类型</dt><dd id="kvAction">—</dd></div>
+          <div><dt>判定时间</dt><dd class="mono" id="kvTime">—</dd></div>
+        </dl>
+
+        <!-- 拦截证据条 -->
+        <div class="proof" id="proof">
+          <span class="proof__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3.5 20.5 19h-17L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M12 9.6v4M12 16.2h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="proof__text">
+            <b id="proofTitle">文件操作已执行</b>
+            <span id="proofDesc">判定为 ALLOW，操作已在受控流程中完成，实际结果已写入审计日志。</span>
+          </div>
+        </div>
+
+        <div class="result__acts">
+          <button class="btn btn--ghost" type="button" id="btnView" disabled>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M2.5 10S5.4 4.8 10 4.8 17.5 10 17.5 10 14.6 15.2 10 15.2 2.5 10 2.5 10Z"
+                    stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="10" cy="10" r="2.2" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            查看文件内容
+          </button>
+          <button class="btn btn--ghost" type="button" id="btnExport" disabled>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 3v9M6.4 8.6 10 12.2l3.6-3.6M4 15.5h12" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            下载文件
+          </button>
+          <span class="result__note" id="resultNote"></span>
+        </div>
+      </section>
+
+      <!-- 最近记录 -->
+      <section class="card card--table" id="history">
+        <div class="card__head">
+          <h2>最近访问记录</h2>
+          <div class="card__tools">
+            <label class="search">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9" r="5.3" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M13 13l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <input type="search" id="search" placeholder="搜索请求编号 / 文件编号">
+            </label>
+            <a class="btn btn--ghost btn--sm" href="#audit">
+              查看全部日志
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11M11 5.4 15.6 10 11 14.6" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>请求编号</th>
+                <th>角色</th>
+                <th>文件</th>
+                <th>操作</th>
+                <th>判定</th>
+                <th>原因</th>
+                <th class="ta-c">实际执行</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── 右列 ── -->
+    <div class="col col--side">
+
+      <!-- 权限矩阵 -->
+      <section class="card card--matrix" id="matrix">
+        <div class="card__head">
+          <h2>角色权限矩阵</h2>
+          <a class="hint" href="#rules">查看规则详情 →</a>
+        </div>
+        <p class="matrix__note">每格显示该角色对该文件的<strong>读取 / 导出</strong>两项判定。</p>
+
+        <div class="matrix" role="table" aria-label="角色权限矩阵">
+          <div class="matrix__row matrix__row--head" role="row">
+            <span role="columnheader">角色 \ 文件</span>
+            <span role="columnheader">F001</span>
+            <span role="columnheader">F002</span>
+            <span role="columnheader">F003</span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>employee</b><i>普通员工</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--pending">导 审批</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>finance</b><i>财务人员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>admin</b><i>管理员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+          </div>
+        </div>
+
+        <ul class="legend">
+          <li><span class="dot dot--allow"></span><b>ALLOW</b>允许执行文件操作</li>
+          <li><span class="dot dot--deny"></span><b>DENY</b>禁止读取或导出</li>
+          <li><span class="dot dot--pending"></span><b>PENDING_APPROVAL</b>审批完成前不得执行</li>
+        </ul>
+      </section>
+
+      <!-- 演示路径 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>演示路径</h2>
+          <span class="hint">3 分钟讲清核心</span>
+        </div>
+        <ol class="notes">
+          <li>先用<strong>快速验证</strong>点一遍五条典型场景，看判定与"实际执行"是否一致。</li>
+          <li>重点看 <code>employee + F002 + 读取</code>：判定 DENY，并证明文件操作没有执行。</li>
+          <li>再对比 <code>employee + F002 + 导出</code>：同样不放行，但走审批流程。</li>
+          <li>到<strong>审计日志</strong>页按判定筛选，核对每条记录都有原因和真实执行状态。</li>
+          <li>最后到<strong>权限规则</strong>页说明这些组合是怎么定出来的。</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- 结果播报（读屏） -->
+<p class="sr-only" id="live" role="status" aria-live="polite"></p>
+</div>
+
+<div class="page" data-page-section="audit" hidden>
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>数据访问</span><span class="sep">/</span><b>审计日志</b>
+      </nav>
+      <h1>审计日志</h1>
+      <p>每一次访问申请都会留下一条不可篡改的记录：谁、什么时候、对哪个文件、做了什么操作、系统怎么判定、以及<strong>实际有没有执行</strong>。点击任意一行可查看完整字段。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok">
+        <span class="chip__pulse"></span>策略引擎在线
+      </span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="stack">
+
+    <!-- 统计 -->
+    <section class="stats" aria-label="日志统计">
+      <dl class="stat stat--all">
+        <dt>请求总数</dt>
+        <dd id="statTotal">0</dd>
+        <span class="stat__sub">本次演示会话累计</span>
+      </dl>
+      <dl class="stat stat--allow">
+        <dt><span class="dot dot--allow"></span>ALLOW 允许</dt>
+        <dd id="statAllow">0</dd>
+        <span class="stat__sub">权限检查通过并已执行</span>
+      </dl>
+      <dl class="stat stat--deny">
+        <dt><span class="dot dot--deny"></span>DENY 拒绝</dt>
+        <dd id="statDeny">0</dd>
+        <span class="stat__sub">在文件操作之前被拦截</span>
+      </dl>
+      <dl class="stat stat--pending">
+        <dt><span class="dot dot--pending"></span>PENDING 待审批</dt>
+        <dd id="statPending">0</dd>
+        <span class="stat__sub">审批完成前不得执行</span>
+      </dl>
+    </section>
+
+    <!-- 日志表 -->
+    <section class="card card--table">
+      <div class="card__head">
+        <h2>操作记录明细</h2>
+        <div class="card__tools">
+          <a class="btn btn--ghost btn--sm" href="#console">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M16 10H5M9 5.4 4.4 10 9 14.6" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            发起新申请
+          </a>
+          <button class="btn btn--ghost btn--sm" type="button" id="btnClear">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M15.5 5.5 4.5 15.5M4.5 4.5l11 11" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            清空日志
+          </button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <span class="filters__label">判定筛选</span>
+        <div class="seg" id="segDecision" role="group" aria-label="按判定筛选">
+          <button class="seg__btn" type="button" data-d="ALL" aria-pressed="true">全部</button>
+          <button class="seg__btn" type="button" data-d="ALLOW" aria-pressed="false">ALLOW</button>
+          <button class="seg__btn" type="button" data-d="DENY" aria-pressed="false">DENY</button>
+          <button class="seg__btn" type="button" data-d="PENDING_APPROVAL" aria-pressed="false">待审批</button>
+        </div>
+
+        <span class="filters__label">实际执行</span>
+        <div class="seg" id="segExec" role="group" aria-label="按执行状态筛选">
+          <button class="seg__btn" type="button" data-e="ALL" aria-pressed="true">全部</button>
+          <button class="seg__btn" type="button" data-e="yes" aria-pressed="false">已执行</button>
+          <button class="seg__btn" type="button" data-e="no" aria-pressed="false">未执行</button>
+        </div>
+
+        <span class="filters__grow"></span>
+
+        <label class="search">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="5.3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M13 13l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input type="search" id="search" placeholder="搜索请求编号 / 文件编号 / 原因">
+        </label>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>请求编号</th>
+              <th>角色</th>
+              <th>文件</th>
+              <th>操作</th>
+              <th>判定</th>
+              <th>原因</th>
+              <th class="ta-c">实际执行</th>
+            </tr>
+          </thead>
+          <tbody id="auditBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 详情抽屉 -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="false" aria-labelledby="drawerTitle" aria-hidden="true">
+  <div class="drawer__head">
+    <div>
+      <h3 id="drawerTitle">记录详情</h3>
+      <p id="drawerSub">—</p>
+    </div>
+    <button class="xbtn" type="button" id="drawerClose" aria-label="关闭详情">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M15.5 5.5 4.5 15.5M4.5 4.5l11 11" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <section>
+      <h4>判定结果</h4>
+      <div id="drawerVerdict"></div>
+    </section>
+
+    <section>
+      <h4>日志字段（统一 9 项）</h4>
+      <dl class="dl" id="drawerFields"></dl>
+    </section>
+
+    <section>
+      <h4>安全结论</h4>
+      <div class="proof" id="drawerProof">
+        <span class="proof__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.5 20.5 19h-17L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M12 9.6v4M12 16.2h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="proof__text">
+          <b id="drawerProofTitle">—</b>
+          <span id="drawerProofDesc">—</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="drawer__foot">
+    <p>本页记录仅保存在当前浏览器（localStorage），用于第一阶段演示。接入后端 SQLite 审计库后，将由 <code>database.py</code> 统一写入并提供查询接口。</p>
+  </div>
+</aside>
+</div>
+
+<div class="page" data-page-section="rules" hidden>
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>策略与说明</span><span class="sep">/</span><b>权限规则</b>
+      </nav>
+      <h1>权限规则</h1>
+      <p>本页是系统的<strong>唯一规则来源</strong>：3 个角色 × 3 个文件 × 2 种操作，共 18 条组合。判定逻辑与页面展示分离，页面只负责把结果如实呈现出来。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok"><span class="chip__pulse"></span>规则版本 v1.0</span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="col">
+
+      <!-- 权限矩阵 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>角色权限矩阵</h2>
+          <span class="hint">读 = read，导 = export</span>
+        </div>
+        <p class="matrix__note">每一格显示该角色对该文件的 <strong>读取 / 导出</strong> 两项判定，共 18 条组合。</p>
+
+        <div class="matrix" role="table" aria-label="角色权限矩阵">
+          <div class="matrix__row matrix__row--head" role="row">
+            <span role="columnheader">角色 \ 文件</span>
+            <span role="columnheader">F001 普通业务报告</span>
+            <span role="columnheader">F002 内部财务报告</span>
+            <span role="columnheader">F003 敏感工资表</span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>employee</b><i>普通员工</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--pending">导 审批</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>finance</b><i>财务人员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--deny">读 拒绝</i><i class="pill pill--deny">导 拒绝</i></span>
+          </div>
+
+          <div class="matrix__row" role="row">
+            <span class="matrix__role" role="rowheader"><b>admin</b><i>管理员</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+            <span class="cell"><i class="pill pill--allow">读 允许</i><i class="pill pill--allow">导 允许</i></span>
+          </div>
+        </div>
+
+        <div class="code-note">
+          为什么 employee 读 F002 是 DENY，导出 F002 却是 PENDING_APPROVAL？
+          因为系统为读取和导出设了两种不同策略：读取直接拒绝，导出进入审批流程。
+          但<strong>只要不是 ALLOW，文件操作就不能执行</strong>。
+        </div>
+      </section>
+
+      <!-- 决策含义 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>三种决策的含义</h2>
+          <span class="hint">这是评审最常追问的一处</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:190px">决策</th>
+                <th>含义</th>
+                <th style="width:230px">是否执行文件操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag tag--allow">ALLOW</span></td>
+                <td>权限检查通过</td>
+                <td>是，执行成功后记录实际结果</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag--deny">DENY</span></td>
+                <td>权限不足或规则不允许</td>
+                <td>否，在文件操作之前拦截</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag--pending">PENDING_APPROVAL</span></td>
+                <td>操作需要人工审批</td>
+                <td>否，审批完成前不得执行</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 接口约定 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>判定接口约定</h2>
+          <span class="hint">A 侧函数 / B 侧接口</span>
+        </div>
+
+        <pre class="code"><span class="c"># policy.py —— 权限判断函数（由 A 负责实现）</span>
+<span class="k">def</span> <span class="f">check_permission</span>(user_role, file_id, action):
+    <span class="c"># user_role: employee | finance | admin</span>
+    <span class="c"># file_id:   F001 | F002 | F003</span>
+    <span class="c"># action:    read | export</span>
+    <span class="k">return</span> {
+        <span class="s">"decision"</span>: <span class="s">"ALLOW"</span>,             <span class="c"># ALLOW | DENY | PENDING_APPROVAL</span>
+        <span class="s">"reason"</span>:   <span class="s">"该角色对该文件有读取权限"</span>,
+    }</pre>
+
+        <div class="code-note">前端页面只消费这个返回结构，不参与规则判断。</div>
+
+        <pre class="code"><span class="c">// POST /api/access —— 统一访问入口（由 B 负责实现）</span>
+{
+  <span class="s">"user_role"</span>: <span class="s">"employee"</span>,
+  <span class="s">"file_id"</span>:   <span class="s">"F002"</span>,
+  <span class="s">"action"</span>:    <span class="s">"read"</span>
+}
+
+<span class="c">// 返回</span>
+{
+  <span class="s">"request_id"</span>: <span class="s">"REQ20261012103025"</span>,
+  <span class="s">"decision"</span>:   <span class="s">"DENY"</span>,
+  <span class="s">"reason"</span>:     <span class="s">"普通员工无权访问内部财务报告"</span>,
+  <span class="s">"executed"</span>:   <span class="k">false</span>          <span class="c">// 必须反映真实执行情况</span>
+}</pre>
+      </section>
+    </div>
+
+    <!-- 右列 -->
+    <div class="col col--side">
+
+      <section class="card">
+        <div class="card__head">
+          <h2>受保护文件</h2>
+          <span class="hint">3 个</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F001 · 普通业务报告</b>
+              <span class="mono">monthly_business_report.txt</span>
+              <span>虚构销售额、订单量、业务情况 · <b>INTERNAL</b></span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F002 · 内部财务报告</b>
+              <span class="mono">monthly_finance_report.txt</span>
+              <span>虚构收入、支出、预算差异 · <b>CONFIDENTIAL</b></span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico">
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M5 2.8h6.2L15 6.6v10.6H5V2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M11 2.8v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div>
+              <b>F003 · 敏感工资表</b>
+              <span class="mono">salary_data.txt</span>
+              <span>虚构员工标识及工资金额 · <b>SENSITIVE</b></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>统一测试用例</h2>
+          <span class="hint">T001 – T008</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:58px">编号</th>
+                <th>角色 / 文件 / 操作</th>
+                <th style="width:104px">预期判定</th>
+                <th class="ta-c" style="width:66px">执行</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">T001</td><td>employee · F001 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+              <tr><td class="mono">T002</td><td>employee · F002 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T003</td><td>employee · F003 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T004</td><td>finance · F002 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+              <tr><td class="mono">T005</td><td>finance · F003 · read</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T006</td><td>employee · F002 · export</td><td><span class="tag tag--pending">待审批</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T007</td><td>employee · F003 · export</td><td><span class="tag tag--deny">DENY</span></td><td class="ta-c">否</td></tr>
+              <tr><td class="mono">T008</td><td>admin · F003 · read</td><td><span class="tag tag--allow">ALLOW</span></td><td class="ta-c">是</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-note">
+          测试完成后必须填写实际判定、实际执行状态与是否通过；预期结果不能直接当作实际测试结果。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>额外安全规则</h2>
+        </div>
+        <ol class="notes">
+          <li>未知用户角色、未知文件编号、未知操作类型<strong>不得默认放行</strong>。</li>
+          <li>文件不存在时，应安全报错，不得执行读取或导出。</li>
+          <li>权限判断与实际文件操作<strong>必须分离</strong>。</li>
+          <li>所有受保护操作必须经过后端统一入口。</li>
+          <li>不能只在网页上显示"拒绝"，而实际仍然读取或导出文件。</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="page" data-page-section="about" hidden>
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>策略与说明</span><span class="sep">/</span><b>系统说明</b>
+      </nav>
+      <h1>系统说明</h1>
+      <p>AegisData 让 AI 助手访问企业文件这件事变得<strong>可判定、可拦截、可追溯</strong>：每次取数先过权限关卡，拒绝就真的读不到，每一次判定都留下证据。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip">第一阶段进行中</span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="col">
+
+      <!-- 问题与机会 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>问题与机会</h2>
+          <span class="hint">为什么做这个</span>
+        </div>
+        <div class="notes" style="counter-reset: none">
+          <p class="muted" style="padding: 0 0 4px; font-size: 13px; line-height: 1.75">
+            企业把 AI 助手接进内部知识库后，AI 往往能"顺手"读到工资表、财务报表这类它本来无权访问的文件——
+            权限判断停留在人的界面上，却没有落在 AI 的取数链路上。
+            <br><br>
+            机会点在于：把 <strong>允许 / 拒绝 / 待审批</strong> 的判定做成文件操作之前的<strong>强制关卡</strong>，
+            并让"拒绝"在证据上可验证——拒绝就是真的没读到。
+          </p>
+        </div>
+      </section>
+
+      <!-- 第一阶段核心目标 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>第一阶段核心目标</h2>
+          <span class="hint">十月交付范围</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14M8 8v9" stroke="currentColor" stroke-width="1.5"/></svg></span>
+            <div>
+              <b>① 文件分类与权限规则</b>
+              <span>普通业务文件、内部财务文件、敏感工资明细三类，制定三种不同的操作规则。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.4 10.2l1.9 1.9 3.4-3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div>
+              <b>② 操作前安全检查</b>
+              <span>在读取文件或导出数据之前，先判断请求是否符合权限规则。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div>
+              <b>③ 三种处理结果</b>
+              <span>ALLOW 允许、DENY 拒绝、PENDING_APPROVAL 待审批。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div>
+              <b>④ 操作日志记录</b>
+              <span>保存请求内容、目标文件、策略判断、处理原因和实际执行结果，便于后续审计。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="3.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 17.5h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div>
+              <b>⑤ 可交互的演示页面</b>
+              <span>老师可以直接在网页上发起测试，查看系统的处理结果和操作记录。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 系统架构 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>系统架构与模块职责</h2>
+          <span class="hint">第一阶段为纯前端演示</span>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:210px">组件</th>
+                <th style="width:150px">负责人</th>
+                <th>职责</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>演示页面</b> <span class="mono">#console / style.css / app.js</span></td>
+                <td>hgy</td>
+                <td>角色、文件、操作的选择控件与结果展示区，只呈现不判断</td>
+              </tr>
+              <tr>
+                <td><b>权限判断</b> <span class="mono">policy.py</span></td>
+                <td>zyz</td>
+                <td>实现 <span class="mono">check_permission(user_role, file_id, action)</span>，输出三种决策</td>
+              </tr>
+              <tr>
+                <td><b>规则与用例</b> <span class="mono">docs/*.md</span></td>
+                <td>ydn</td>
+                <td>文件清单、权限规则表、测试用例与虚构数据文件</td>
+              </tr>
+              <tr>
+                <td><b>统一入口</b> <span class="mono">POST /api/access</span></td>
+                <td>hgy + zyz</td>
+                <td>接收请求、调用权限函数、执行受控文件操作、写审计日志</td>
+              </tr>
+              <tr>
+                <td><b>审计日志</b> <span class="mono">database.py</span></td>
+                <td>hgy</td>
+                <td>SQLite 存储 9 个字段，提供日志查询与展示</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-note">
+          当前页面为第一阶段前端初稿：判定结果由前端预置演示数据模拟，接入后端策略函数后必须整体移除。
+        </div>
+      </section>
+
+      <!-- 项目路线 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>项目路线</h2>
+          <span class="hint">五个阶段</span>
+        </div>
+        <div class="roadmap">
+          <div class="phase phase--now">
+            <span class="phase__no">阶段 01 · 十月交付</span>
+            <h4>企业内部文件与财务数据访问控制</h4>
+            <p>权限规则、操作前拦截、三种决策、操作日志、可交互演示页面。做完这一阶段拿去找指导老师。</p>
+            <div class="phase__tags">
+              <span class="chipx">文件分类</span>
+              <span class="chipx">操作前检查</span>
+              <span class="chipx">三种决策</span>
+              <span class="chipx">审计日志</span>
+              <span class="chipx">演示页面</span>
+            </div>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 02</span>
+            <h4>操作日志与审计证据管理</h4>
+            <p>把演示级日志升级为可查询、可导出、可核验的审计证据链。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 03</span>
+            <h4>风险识别与关联分析</h4>
+            <p>从访问记录中识别异常行为，关联多源数据形成风险视图。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 04</span>
+            <h4>整改管理与复核</h4>
+            <p>风险项派单、整改跟踪与复核闭环。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 05</span>
+            <h4>AI 审计辅助与完整展示</h4>
+            <p>用 AI 辅助审计分析与结论生成，形成完整产品展示。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 右列 -->
+    <div class="col col--side">
+
+      <section class="card">
+        <div class="card__head">
+          <h2>审计日志字段</h2>
+          <span class="hint">统一 9 项</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr><th style="width:120px">字段</th><th>含义</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tbl-code">id</td><td>日志唯一编号</td></tr>
+              <tr><td class="tbl-code">timestamp</td><td>请求时间</td></tr>
+              <tr><td class="tbl-code">request_id</td><td>请求关联编号</td></tr>
+              <tr><td class="tbl-code">user_role</td><td>发起请求的角色</td></tr>
+              <tr><td class="tbl-code">file_id</td><td>目标文件编号</td></tr>
+              <tr><td class="tbl-code">action</td><td>read 或 export</td></tr>
+              <tr><td class="tbl-code">decision</td><td>权限决策</td></tr>
+              <tr><td class="tbl-code">reason</td><td>决策原因</td></tr>
+              <tr><td class="tbl-code">executed</td><td>文件操作是否实际执行</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-note">
+          日志必须反映真实结果，不能在程序里把所有记录的 <span class="mono">executed</span> 固定写成 false，也不能根据页面提示随意填写。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>已交付 / 待交付</h2>
+          <span class="hint">1012 – 1016</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>演示页面初稿（四页）</b><span class="mono">prototype/#console · #audit · rules.html · about.html</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>样式与交互</b><span class="mono">static/style.css · static/app.js</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>权限矩阵与测试用例展示</b><span>18 条规则组合 + T001–T008 用例</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.8v6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <div><b>待交付：权限函数对接</b><span>接入 policy.py 与 POST /api/access（阶段二）</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.8v6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <div><b>待交付：SQLite 审计库</b><span>database.py 与日志查询展示</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>免责说明</h2>
+        </div>
+        <p class="disclaimer" style="border-top: 0">
+          本项目使用虚构企业数据，全部文件内容均为模拟数据，不含真实企业机密或真实个人信息。
+          页面中的权限规则是为演示目的设计的示例策略，不代表所有企业都应采用相同的权限设置。
+          当前为第一阶段前端初稿，判定结果由前端预置演示数据模拟，接入后端策略函数后必须整体移除。
+        </p>
+      </section>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   AegisData · 企业数据安全管理平台
+   第一阶段前端初稿 · 共享数据层 + 页面控制器
+   ──────────────────────────────────────────────────────────────
+   ⚠️ 本文件只负责「呈现」，不实现任何权限判断规则。
+      DEMO_DECISIONS 是纯前端预置的演示数据，用于固定信息层级；
+      接入后端统一入口 check_permission(user_role, file_id, action)
+      之后，必须整体删除 DEMO_DECISIONS 与 resolve()，改为请求
+      POST /api/access 获取 { request_id, decision, reason, executed }。
+
+   页面通过 <body data-page="..."> 声明身份：
+     console → 访问控制台      audit → 审计日志
+     rules   → 权限规则（只读） about → 系统说明（只读）
+   ══════════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  /* ══════════ 1. 字典：只能来自 docs/file_list.md 与 docs/permission_rules.md ══════════ */
+
+  const ROLES = {
+    employee: '普通员工 · employee',
+    finance:  '财务人员 · finance',
+    admin:    '管理员 · admin'
+  };
+
+  /* 表格等窄栏位使用的角色简称 */
+  const ROLE_SHORT = {
+    employee: '普通员工',
+    finance:  '财务人员',
+    admin:    '管理员'
+  };
+
+  const FILES = {
+    F001: 'F001 · 普通业务报告',
+    F002: 'F002 · 内部财务报告',
+    F003: 'F003 · 敏感工资表'
+  };
+
+  const ACTIONS = {
+    read:   '读取',
+    export: '导出'
+  };
+
+  /* ══════════ 2. 演示数据（接入后端后整体删除） ══════════ */
+
+  const DEMO_DECISIONS = {
+    'employee|F001|read':   { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'employee|F001|export': { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' },
+    'employee|F002|read':   { decision: 'DENY',             reason: '普通员工无权访问内部财务报告' },
+    'employee|F002|export': { decision: 'PENDING_APPROVAL', reason: '导出内部财务报告需要审批' },
+    'employee|F003|read':   { decision: 'DENY',             reason: '普通员工无权访问敏感工资数据' },
+    'employee|F003|export': { decision: 'DENY',             reason: '普通员工无权导出敏感工资数据' },
+    'finance|F001|read':    { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'finance|F001|export':  { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' },
+    'finance|F002|read':    { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'finance|F002|export':  { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' },
+    'finance|F003|read':    { decision: 'DENY',             reason: '财务人员无权访问敏感工资数据' },
+    'finance|F003|export':  { decision: 'DENY',             reason: '财务人员无权导出敏感工资数据' },
+    'admin|F001|read':      { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'admin|F001|export':    { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' },
+    'admin|F002|read':      { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'admin|F002|export':    { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' },
+    'admin|F003|read':      { decision: 'ALLOW',            reason: '该角色对该文件有读取权限' },
+    'admin|F003|export':    { decision: 'ALLOW',            reason: '该角色对该文件有导出权限' }
+  };
+
+  const UNKNOWN_REASON = {
+    role:   '未知用户角色，按安全策略默认拒绝',
+    file:   '未知文件编号，按安全策略默认拒绝',
+    action: '未知操作类型，按安全策略默认拒绝'
+  };
+
+  /* 判定结果的呈现文案与图标 */
+  const ICONS = {
+    ALLOW:            '<path d="M5 12.6l4.4 4.4L19 7.4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    DENY:             '<circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="2"/><path d="M6.4 17.6 17.6 6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    PENDING_APPROVAL: '<circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="2"/><path d="M12 7.4V12l3.2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+
+  const VERDICT = {
+    ALLOW: {
+      cls:        'is-allow',
+      title:      '操作允许',
+      sub:        '权限检查通过，文件操作已在受控流程中执行',
+      proofTitle: '文件操作已执行',
+      proofDesc:  '判定为 ALLOW，操作已在受控流程中完成，实际结果已写入审计日志。',
+      executed:   true
+    },
+    DENY: {
+      cls:        'is-deny',
+      title:      '操作拒绝',
+      sub:        '权限规则不允许该操作，已在文件操作之前拦截',
+      proofTitle: '已证明：文件操作没有执行',
+      proofDesc:  '判定为 DENY，系统在真实文件操作之前完成拦截，未读取、未导出目标文件。',
+      executed:   false
+    },
+    PENDING_APPROVAL: {
+      cls:        'is-pending',
+      title:      '待审批',
+      sub:        '该操作需要人工审批，审批完成前不得执行',
+      proofTitle: '已证明：审批完成前没有执行',
+      proofDesc:  '判定为 PENDING_APPROVAL，操作进入审批流程，审批通过前未读取、未导出目标文件。',
+      executed:   false
+    }
+  };
+
+  /* ══════════ 3. 唯一"规则"来源：查表。未知组合一律不放行 ══════════ */
+
+  function resolve(role, fileId, action) {
+    if (!Object.prototype.hasOwnProperty.call(ROLES, role)) {
+      return { decision: 'DENY', reason: UNKNOWN_REASON.role };
+    }
+    if (!Object.prototype.hasOwnProperty.call(FILES, fileId)) {
+      return { decision: 'DENY', reason: UNKNOWN_REASON.file };
+    }
+    if (!Object.prototype.hasOwnProperty.call(ACTIONS, action)) {
+      return { decision: 'DENY', reason: UNKNOWN_REASON.action };
+    }
+    return DEMO_DECISIONS[role + '|' + fileId + '|' + action] ||
+           { decision: 'DENY', reason: '未匹配到任何授权规则，按安全策略默认拒绝' };
+  }
+
+  /* ══════════ 4. 存储：记录跨页面共享（演示用 localStorage） ══════════ */
+
+  const STORE_KEY = 'aegisdata.records.v1';
+
+  const store = (function () {
+    let memory = [];
+    let usable = false;
+    try {
+      window.localStorage.setItem('__t', '1');
+      window.localStorage.removeItem('__t');
+      usable = true;
+    } catch (e) {
+      usable = false;   /* file:// 下某些浏览器禁用 localStorage，退回内存存储 */
+    }
+    return {
+      all: function () {
+        if (!usable) return memory;
+        try {
+          const raw = window.localStorage.getItem(STORE_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) { return []; }
+      },
+      save: function (list) {
+        if (!usable) { memory = list; return; }
+        try {
+          window.localStorage.setItem(STORE_KEY, JSON.stringify(list));
+        } catch (e) { memory = list; }
+      },
+      clear: function () {
+        memory = [];
+        if (!usable) return;
+        try { window.localStorage.removeItem(STORE_KEY); } catch (e) { /* 忽略 */ }
+      },
+      persistent: usable
+    };
+  })();
+
+  /* ══════════ 5. 工具 ══════════ */
+
+  const $ = function (id) { return document.getElementById(id); };
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function stamp(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+           ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+  }
+
+  function makeRequestId(d, n) {
+    return 'REQ' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) +
+           pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds()) +
+           String(n).padStart(2, '0');
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  const ICON_EXEC_YES = '<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.6"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const ICON_EXEC_NO  = '<svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.6"/><path d="M7.2 10h5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+  /* 表格里的判定徽标：PENDING_APPROVAL 太长，窄栏位显示为"待审批" */
+  function decisionTag(decision) {
+    const map = {
+      ALLOW:            ['tag--allow',   'ALLOW'],
+      DENY:             ['tag--deny',    'DENY'],
+      PENDING_APPROVAL: ['tag--pending', '待审批']
+    };
+    const item = map[decision] || ['tag--deny', decision];
+    return '<span class="tag ' + item[0] + '" title="' + esc(decision) + '">' + item[1] + '</span>';
+  }
+
+  function execCell(decision) {
+    const v = VERDICT[decision] || VERDICT.DENY;
+    return v.executed
+      ? '<span class="exec exec--yes">' + ICON_EXEC_YES + '已执行</span>'
+      : '<span class="exec exec--no">'  + ICON_EXEC_NO  + '未执行</span>';
+  }
+
+  /* 历史表格行（控制台与审计页共用） */
+  function historyRow(r) {
+    return '<tr' + (r.isNew ? ' class="is-new"' : '') + '>' +
+      '<td class="mono c-time">' + esc(r.time) + '</td>' +
+      '<td class="mono c-req" title="' + esc(r.requestId) + '">' + esc(r.requestId) + '</td>' +
+      '<td title="' + esc(ROLES[r.role] || r.role) + '">' + esc(ROLE_SHORT[r.role] || r.role) + '</td>' +
+      '<td><span class="tag-code">' + esc(r.fileId) + '</span></td>' +
+      '<td class="c-act">' + esc(ACTIONS[r.action] || r.action) + '</td>' +
+      '<td>' + decisionTag(r.decision) + '</td>' +
+      '<td class="reason" title="' + esc(r.reason) + '">' + esc(r.reason) + '</td>' +
+      '<td class="ta-c">' + execCell(r.decision) + '</td>' +
+    '</tr>';
+  }
+
+  function emptyRow(text) {
+    return '<tr><td colspan="8" class="empty">' + text + '</td></tr>';
+  }
+
+  function updateNavCount() {
+    const n = $('navCount');
+    if (n) n.textContent = String(store.all().length);
+  }
+
+  /* ══════════ 6. 控制台页 ══════════ */
+
+  function initConsole() {
+    let seq = 0;
+
+    const el = {
+      form:        $('requestForm'),
+      role:        $('role'),
+      file:        $('file'),
+      action:      $('action'),
+      submitBtn:   $('submitBtn'),
+      result:      $('result'),
+      badge:       $('decisionBadge'),
+      verdictIcon: document.querySelector('.verdict__icon svg'),
+      vTitle:      $('verdictTitle'),
+      vSub:        $('verdictSub'),
+      kvRequestId: $('kvRequestId'),
+      kvDecision:  $('kvDecision'),
+      kvRole:      $('kvRole'),
+      kvReason:    $('kvReason'),
+      kvFile:      $('kvFile'),
+      kvExecuted:  $('kvExecuted'),
+      kvAction:    $('kvAction'),
+      kvTime:      $('kvTime'),
+      proofTitle:  $('proofTitle'),
+      proofDesc:   $('proofDesc'),
+      btnView:     $('btnView'),
+      btnExport:   $('btnExport'),
+      resultNote:  $('resultNote'),
+      historyBody: $('historyBody'),
+      search:      $('search'),
+      live:        $('live')
+    };
+
+    /* 把最近一次记录渲染进结果卡片 */
+    function renderResult(rec) {
+      const v = VERDICT[rec.decision] || VERDICT.DENY;
+
+      el.result.classList.remove('is-allow', 'is-deny', 'is-pending');
+      el.result.classList.add(v.cls);
+      el.result.dataset.decision = rec.decision;
+
+      el.badge.textContent = rec.decision;
+      el.vTitle.textContent = v.title;
+      el.vSub.textContent = v.sub;
+      if (el.verdictIcon) el.verdictIcon.innerHTML = ICONS[rec.decision] || ICONS.DENY;
+
+      el.kvRequestId.textContent = rec.requestId;
+      el.kvDecision.textContent = rec.decision;
+      el.kvRole.textContent = ROLES[rec.role] || rec.role;
+      el.kvReason.textContent = rec.reason;
+      el.kvFile.textContent = FILES[rec.fileId] || rec.fileId;
+      el.kvAction.textContent = ACTIONS[rec.action] || rec.action;
+      el.kvTime.textContent = rec.time;
+      el.kvExecuted.textContent = v.executed ? '已执行' : '未执行';
+      el.kvExecuted.style.color = v.executed ? 'var(--allow)' : 'var(--ink-2)';
+      el.kvExecuted.style.fontWeight = '600';
+
+      el.proofTitle.textContent = v.proofTitle;
+      el.proofDesc.textContent = v.proofDesc;
+
+      el.btnView.disabled = !v.executed;
+      el.btnExport.disabled = !(v.executed && rec.action === 'export');
+      /* 读取请求没有可下载的产物，直接不显示下载按钮 */
+      el.btnExport.hidden = (rec.action !== 'export');
+      el.resultNote.textContent = '判定时间 ' + rec.time;
+
+      el.result.classList.remove('is-flash');
+      void el.result.offsetWidth;
+      el.result.classList.add('is-flash');
+    }
+
+    function renderHistory() {
+      const kw = (el.search.value || '').trim().toLowerCase();
+      const all = store.all();
+      const rows = all.filter(function (r) {
+        if (!kw) return true;
+        return (r.requestId + ' ' + r.fileId + ' ' + r.role + ' ' + r.decision)
+          .toLowerCase().indexOf(kw) !== -1;
+      }).slice(0, 10);
+
+      el.historyBody.innerHTML = rows.length
+        ? rows.map(historyRow).join('')
+        : emptyRow(all.length ? '没有匹配的记录' : '暂无操作记录，提交一次访问申请试试');
+
+      updateNavCount();
+    }
+
+    /* 首屏那次自动判定不算用户操作，不触发滚动 */
+    let userInitiated = false;
+
+    function submit(role, fileId, action) {
+      const now = new Date();
+      const verdict = resolve(role, fileId, action);
+
+      const rec = {
+        requestId: makeRequestId(now, ++seq),
+        time:      stamp(now),
+        role:      role,
+        fileId:    fileId,
+        action:    action,
+        decision:  verdict.decision,
+        reason:    verdict.reason,
+        isNew:     true
+      };
+
+      renderResult(rec);
+
+      const all = store.all();
+      all.forEach(function (r) { r.isNew = false; });
+      all.unshift(rec);
+      while (all.length > 200) all.pop();
+      store.save(all);
+      renderHistory();
+
+      if (el.live) {
+        el.live.textContent = rec.requestId + ' ' + rec.decision + '：' + rec.reason;
+      }
+
+      /* 窄屏时结果区在表单下方，滚动过去；但首屏那次自动判定不滚，避免一打开就"跳" */
+      if (userInitiated && window.innerWidth < 1220) {
+        el.result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    /* ── 事件 ── */
+    el.form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      userInitiated = true;
+      const btn = el.submitBtn;
+      btn.disabled = true;
+      window.setTimeout(function () {
+        submit(el.role.value, el.file.value, el.action.value);
+        btn.disabled = false;
+      }, 240);
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.tbtn'), function (b) {
+      b.addEventListener('click', function () {
+        el.role.value = b.dataset.r;
+        el.file.value = b.dataset.f;
+        el.action.value = b.dataset.a;
+        el.form.dispatchEvent(new Event('submit', { cancelable: true }));
+      });
+    });
+
+    el.search.addEventListener('input', renderHistory);
+
+    /* ── 首次进入：补四条演示记录（已存在记录则不重复播种） ── */
+    if (store.all().length === 0) {
+      const seedRows = [
+        { role: 'employee', fileId: 'F003', action: 'read'   },
+        { role: 'employee', fileId: 'F002', action: 'export' },
+        { role: 'finance',  fileId: 'F002', action: 'read'   },
+        { role: 'employee', fileId: 'F001', action: 'read'   }
+      ];
+      const base = new Date(Date.now() - 12 * 60 * 1000);
+      const seeded = seedRows.map(function (row, i) {
+        const t = new Date(base.getTime() + i * 190000);
+        const v = resolve(row.role, row.fileId, row.action);
+        seq += 1;
+        return {
+          requestId: makeRequestId(t, seq),
+          time:      stamp(t),
+          role:      row.role,
+          fileId:    row.fileId,
+          action:    row.action,
+          decision:  v.decision,
+          reason:    v.reason,
+          isNew:     false
+        };
+      }).reverse();
+      store.save(seeded);
+    }
+
+    /* 初始展示一次「允许」判定，避免结果卡空白 */
+    renderHistory();
+    submit('employee', 'F001', 'read');
+    const all = store.all();
+    if (all[0]) { all[0].isNew = false; store.save(all); }
+    renderHistory();
+
+    return {
+      refresh: function () {
+        renderHistory();
+      }
+    };
+  }
+
+  /* ══════════ 7. 审计日志页 ══════════ */
+
+  function initAudit() {
+    const state = { decision: 'ALL', exec: 'ALL', kw: '' };
+
+    const el = {
+      body:        $('auditBody'),
+      search:      $('search'),
+      segDecision: $('segDecision'),
+      segExec:     $('segExec'),
+      btnClear:    $('btnClear'),
+      scrim:       $('scrim'),
+      drawer:      $('drawer'),
+      drawerClose: $('drawerClose'),
+      drawerTitle: $('drawerTitle'),
+      drawerSub:   $('drawerSub'),
+      drawerVerdict: $('drawerVerdict'),
+      drawerFields:  $('drawerFields'),
+      drawerProof:   $('drawerProof'),
+      drawerProofTitle: $('drawerProofTitle'),
+      drawerProofDesc:  $('drawerProofDesc'),
+      statTotal:   $('statTotal'),
+      statAllow:   $('statAllow'),
+      statDeny:    $('statDeny'),
+      statPending: $('statPending')
+    };
+
+    let openId = null;
+    let started = false;
+
+    /* 单文件版：审计页区块初始是 hidden，首次进入该页时才真正渲染 */
+    function start() {
+      if (started) return;
+      started = true;
+      render();
+    }
+
+    function filtered() {
+      const kw = state.kw.toLowerCase();
+      return store.all().filter(function (r) {
+        if (state.decision !== 'ALL' && r.decision !== state.decision) return false;
+
+        const v = VERDICT[r.decision] || VERDICT.DENY;
+        if (state.exec === 'yes' && !v.executed) return false;
+        if (state.exec === 'no'  &&  v.executed) return false;
+
+        if (!kw) return true;
+        return (r.requestId + ' ' + r.fileId + ' ' + r.role + ' ' + r.decision + ' ' + r.reason)
+          .toLowerCase().indexOf(kw) !== -1;
+      });
+    }
+
+    function renderStats() {
+      const all = store.all();
+      el.statTotal.textContent = String(all.length);
+      el.statAllow.textContent = String(all.filter(function (r) { return r.decision === 'ALLOW'; }).length);
+      el.statDeny.textContent  = String(all.filter(function (r) { return r.decision === 'DENY'; }).length);
+      el.statPending.textContent = String(all.filter(function (r) { return r.decision === 'PENDING_APPROVAL'; }).length);
+      updateNavCount();
+    }
+
+    function renderTable() {
+      const rows = filtered();
+      if (!rows.length) {
+        el.body.innerHTML = emptyRow(store.all().length ? '没有符合筛选条件的记录' : '暂无日志，去访问控制台发起一次申请');
+        return;
+      }
+      el.body.innerHTML = rows.map(function (r) {
+        return historyRow(r)
+          .replace(' class="is-new"', '')
+          .replace('<tr', '<tr data-id="' + esc(r.requestId) + '" tabindex="0" class="is-row' +
+                   (r.isNew ? ' is-new' : '') + '"');
+      }).join('');
+
+      Array.prototype.forEach.call(el.body.querySelectorAll('tr[data-id]'), function (tr) {
+        tr.setAttribute('aria-selected', String(tr.dataset.id === openId));
+        tr.addEventListener('click', function () { openDrawer(tr.dataset.id); });
+        tr.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(tr.dataset.id); }
+        });
+      });
+    }
+
+    function render() { renderStats(); renderTable(); }
+
+    /* ── 详情抽屉 ── */
+    function openDrawer(id) {
+      const rec = store.all().filter(function (r) { return r.requestId === id; })[0];
+      if (!rec) return;
+
+      const v = VERDICT[rec.decision] || VERDICT.DENY;
+      openId = id;
+
+      el.drawerTitle.textContent = rec.requestId;
+      el.drawerSub.textContent = rec.time + ' · ' + (ACTIONS[rec.action] || rec.action) +
+                                 ' · ' + (FILES[rec.fileId] || rec.fileId);
+
+      el.drawerVerdict.innerHTML =
+        '<span class="badge" style="border-color:' +
+        (rec.decision === 'ALLOW' ? 'var(--allow-line)' : rec.decision === 'DENY' ? 'var(--deny-line)' : 'var(--pending-line)') +
+        ';color:' +
+        (rec.decision === 'ALLOW' ? 'var(--allow)' : rec.decision === 'DENY' ? 'var(--deny)' : 'var(--pending)') +
+        '">' + esc(rec.decision) + '</span>' +
+        '<p style="margin-top:10px;font-size:13px;color:var(--ink-2)">' + esc(v.sub) + '</p>';
+
+      const fields = [
+        ['id',         rec.requestId],
+        ['timestamp',  rec.time],
+        ['request_id', rec.requestId],
+        ['user_role',  rec.role],
+        ['file_id',    rec.fileId],
+        ['action',     rec.action],
+        ['decision',   rec.decision],
+        ['reason',     rec.reason],
+        ['executed',   v.executed ? 'true' : 'false']
+      ];
+      el.drawerFields.innerHTML = fields.map(function (f) {
+        return '<div class="dl__row"><dt>' + f[0] + '</dt><dd class="mono">' + esc(f[1]) + '</dd></div>';
+      }).join('');
+
+      el.drawerProof.classList.remove('is-allow');
+      el.drawerProof.className = 'proof ' + v.cls;
+      el.drawerProofTitle.textContent = v.proofTitle;
+      el.drawerProofDesc.textContent = v.proofDesc;
+
+      el.drawer.classList.add('is-open');
+      el.drawer.setAttribute('aria-hidden', 'false');
+      el.scrim.classList.add('is-open');
+      renderTable();
+    }
+
+    function closeDrawer() {
+      openId = null;
+      el.drawer.classList.remove('is-open');
+      el.drawer.setAttribute('aria-hidden', 'true');
+      el.scrim.classList.remove('is-open');
+      renderTable();
+    }
+
+    el.drawerClose.addEventListener('click', closeDrawer);
+    el.scrim.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    /* ── 筛选事件 ── */
+    el.segDecision.addEventListener('click', function (e) {
+      const b = e.target.closest('.seg__btn');
+      if (!b) return;
+      start();
+      state.decision = b.dataset.d;
+      Array.prototype.forEach.call(el.segDecision.querySelectorAll('.seg__btn'), function (x) {
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      renderTable();
+    });
+
+    el.segExec.addEventListener('click', function (e) {
+      const b = e.target.closest('.seg__btn');
+      if (!b) return;
+      start();
+      state.exec = b.dataset.e;
+      Array.prototype.forEach.call(el.segExec.querySelectorAll('.seg__btn'), function (x) {
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      renderTable();
+    });
+
+    el.search.addEventListener('input', function () {
+      start();
+      state.kw = el.search.value || '';
+      renderTable();
+    });
+
+    el.btnClear.addEventListener('click', function () {
+      start();
+      if (!store.all().length) return;
+      if (window.confirm('确定清空全部审计日志记录吗？（仅影响本机演示数据）')) {
+        store.clear();
+        closeDrawer();
+        render();
+      }
+    });
+
+    render();
+
+    return {
+      refresh: function () {
+        if (started) render();
+      }
+    };
+  }
+
+  /* ══════════ 8. hash 路由 ══════════
+     多文件版：每个链接指向独立页面（#console → index.html）。
+     单文件版：四个页面区块都在同一个文档里，由这里切换显示。
+     ------------------------------------------------ */
+
+  const ROUTES = ['console', 'audit', 'rules', 'about'];
+
+  function currentRoute() {
+    const h = (window.location.hash || '').replace(/^#/, '');
+    return ROUTES.indexOf(h) !== -1 ? h : 'console';
+  }
+
+  function isSingleFile() {
+    return !!(document.body.dataset.single && document.querySelector('[data-page-section]'));
+  }
+
+  function activate(route) {
+    document.body.dataset.page = route;
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-page-section]'), function (sec) {
+      sec.hidden = (sec.dataset.pageSection !== route);
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.nav__item[data-nav]'), function (a) {
+      const on = a.dataset.nav === route;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); }
+    });
+
+    window.scrollTo(0, 0);
+  }
+
+  function initSection(route) {
+    if (route === 'console') {
+      if (!window.__aegis.console) window.__aegis.console = initConsole();
+      else window.__aegis.console.refresh();
+    } else if (route === 'audit') {
+      if (!window.__aegis.audit) window.__aegis.audit = initAudit();
+      else window.__aegis.audit.refresh();
+    }
+  }
+
+  /* ══════════ 9. 启动 ══════════ */
+
+  function boot() {
+    const single = isSingleFile();
+    updateNavCount();
+
+    if (!single) {
+      /* 多文件版：当前文档就是当前页，直接初始化 */
+      const page = document.body.dataset.page || '';
+      if (page === 'console') initConsole();
+      else if (page === 'audit') initAudit();
+      return;
+    }
+
+    /* 单文件版：按 hash 切页 */
+    if (!window.location.hash) {
+      try { window.history.replaceState(null, '', '#console'); } catch (e) { /* 忽略 */ }
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('.nav__item[data-nav]'), function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        const route = a.dataset.nav;
+        if (currentRoute() === route) {
+          activate(route);
+        } else {
+          window.location.hash = route;
+        }
+      });
+    });
+
+    window.addEventListener('hashchange', function () {
+      const route = currentRoute();
+      activate(route);
+      initSection(route);
+    });
+
+    const first = currentRoute();
+    activate(first);
+    initSection(first);
+  }
+
+  window.__aegis = window.__aegis || {};
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+</body>
+</html>

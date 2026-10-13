@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>审计日志 · AegisData 企业数据安全管理平台</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-page="audit">
+
+<aside class="sidebar">
+  <a class="brand" href="#console">
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 16.2l3.4 3.4L21.5 13" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand__text">
+      <b>AegisData</b>
+      <span>企业数据安全管理平台</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="主导航">
+    <p class="nav__group">数据访问</p>
+    <a class="nav__item" href="#console">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span>访问控制台</span>
+    </a>
+    <a class="nav__item is-active" href="#audit" aria-current="page">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>审计日志</span>
+      <i class="nav__count" id="navCount">0</i>
+    </a>
+
+    <p class="nav__group">策略与说明</p>
+    <a class="nav__item" href="#rules">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.8" y="3.2" width="14.4" height="13.6" rx="2.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2.8 7.6h14.4M8 7.6v9.2" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>权限规则</span>
+    </a>
+    <a class="nav__item" href="#about">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 9v4.4M10 6.6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>系统说明</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__foot">
+    <div class="stage">
+      <span class="stage__dot"></span>
+      <div>
+        <b>第一阶段 · 演示环境</b>
+        <span>全部为虚构数据，不含真实企业信息</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>数据访问</span><span class="sep">/</span><b>审计日志</b>
+      </nav>
+      <h1>审计日志</h1>
+      <p>每一次访问申请都会留下一条不可篡改的记录：谁、什么时候、对哪个文件、做了什么操作、系统怎么判定、以及<strong>实际有没有执行</strong>。点击任意一行可查看完整字段。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip chip--ok">
+        <span class="chip__pulse"></span>策略引擎在线
+      </span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="stack">
+
+    <!-- 统计 -->
+    <section class="stats" aria-label="日志统计">
+      <dl class="stat stat--all">
+        <dt>请求总数</dt>
+        <dd id="statTotal">0</dd>
+        <span class="stat__sub">本次演示会话累计</span>
+      </dl>
+      <dl class="stat stat--allow">
+        <dt><span class="dot dot--allow"></span>ALLOW 允许</dt>
+        <dd id="statAllow">0</dd>
+        <span class="stat__sub">权限检查通过并已执行</span>
+      </dl>
+      <dl class="stat stat--deny">
+        <dt><span class="dot dot--deny"></span>DENY 拒绝</dt>
+        <dd id="statDeny">0</dd>
+        <span class="stat__sub">在文件操作之前被拦截</span>
+      </dl>
+      <dl class="stat stat--pending">
+        <dt><span class="dot dot--pending"></span>PENDING 待审批</dt>
+        <dd id="statPending">0</dd>
+        <span class="stat__sub">审批完成前不得执行</span>
+      </dl>
+    </section>
+
+    <!-- 日志表 -->
+    <section class="card card--table">
+      <div class="card__head">
+        <h2>操作记录明细</h2>
+        <div class="card__tools">
+          <a class="btn btn--ghost btn--sm" href="#console">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M16 10H5M9 5.4 4.4 10 9 14.6" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            发起新申请
+          </a>
+          <button class="btn btn--ghost btn--sm" type="button" id="btnClear">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M15.5 5.5 4.5 15.5M4.5 4.5l11 11" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            清空日志
+          </button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <span class="filters__label">判定筛选</span>
+        <div class="seg" id="segDecision" role="group" aria-label="按判定筛选">
+          <button class="seg__btn" type="button" data-d="ALL" aria-pressed="true">全部</button>
+          <button class="seg__btn" type="button" data-d="ALLOW" aria-pressed="false">ALLOW</button>
+          <button class="seg__btn" type="button" data-d="DENY" aria-pressed="false">DENY</button>
+          <button class="seg__btn" type="button" data-d="PENDING_APPROVAL" aria-pressed="false">待审批</button>
+        </div>
+
+        <span class="filters__label">实际执行</span>
+        <div class="seg" id="segExec" role="group" aria-label="按执行状态筛选">
+          <button class="seg__btn" type="button" data-e="ALL" aria-pressed="true">全部</button>
+          <button class="seg__btn" type="button" data-e="yes" aria-pressed="false">已执行</button>
+          <button class="seg__btn" type="button" data-e="no" aria-pressed="false">未执行</button>
+        </div>
+
+        <span class="filters__grow"></span>
+
+        <label class="search">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="5.3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M13 13l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input type="search" id="search" placeholder="搜索请求编号 / 文件编号 / 原因">
+        </label>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>请求编号</th>
+              <th>角色</th>
+              <th>文件</th>
+              <th>操作</th>
+              <th>判定</th>
+              <th>原因</th>
+              <th class="ta-c">实际执行</th>
+            </tr>
+          </thead>
+          <tbody id="auditBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 详情抽屉 -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="false" aria-labelledby="drawerTitle" aria-hidden="true">
+  <div class="drawer__head">
+    <div>
+      <h3 id="drawerTitle">记录详情</h3>
+      <p id="drawerSub">—</p>
+    </div>
+    <button class="xbtn" type="button" id="drawerClose" aria-label="关闭详情">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M15.5 5.5 4.5 15.5M4.5 4.5l11 11" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <section>
+      <h4>判定结果</h4>
+      <div id="drawerVerdict"></div>
+    </section>
+
+    <section>
+      <h4>日志字段（统一 9 项）</h4>
+      <dl class="dl" id="drawerFields"></dl>
+    </section>
+
+    <section>
+      <h4>安全结论</h4>
+      <div class="proof" id="drawerProof">
+        <span class="proof__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.5 20.5 19h-17L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M12 9.6v4M12 16.2h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="proof__text">
+          <b id="drawerProofTitle">—</b>
+          <span id="drawerProofDesc">—</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="drawer__foot">
+    <p>本页记录仅保存在当前浏览器（localStorage），用于第一阶段演示。接入后端 SQLite 审计库后，将由 <code>database.py</code> 统一写入并提供查询接口。</p>
+  </div>
+</aside>
+
+<script src="../static/app.js"></script>
+</body>
+</html>

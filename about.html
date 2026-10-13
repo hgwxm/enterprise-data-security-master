@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统说明 · AegisData 企业数据安全管理平台</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body data-page="about">
+
+<aside class="sidebar">
+  <a class="brand" href="#console">
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 3 27 7.5v8.7c0 6.6-4.5 11.6-11 13.8-6.5-2.2-11-7.2-11-13.8V7.5L16 3Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 16.2l3.4 3.4L21.5 13" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand__text">
+      <b>AegisData</b>
+      <span>企业数据安全管理平台</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="主导航">
+    <p class="nav__group">数据访问</p>
+    <a class="nav__item" href="#console">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <span>访问控制台</span>
+    </a>
+    <a class="nav__item" href="#audit">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>审计日志</span>
+      <i class="nav__count" id="navCount">0</i>
+    </a>
+
+    <p class="nav__group">策略与说明</p>
+    <a class="nav__item" href="rules.html">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.8" y="3.2" width="14.4" height="13.6" rx="2.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2.8 7.6h14.4M8 7.6v9.2" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>权限规则</span>
+    </a>
+    <a class="nav__item is-active" href="about.html" aria-current="page">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 9v4.4M10 6.6h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>系统说明</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__foot">
+    <div class="stage">
+      <span class="stage__dot"></span>
+      <div>
+        <b>第一阶段 · 演示环境</b>
+        <span>全部为虚构数据，不含真实企业信息</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+
+  <header class="topbar">
+    <div class="topbar__head">
+      <nav class="topbar__crumbs" aria-label="面包屑">
+        <span>策略与说明</span><span class="sep">/</span><b>系统说明</b>
+      </nav>
+      <h1>系统说明</h1>
+      <p>AegisData 让 AI 助手访问企业文件这件事变得<strong>可判定、可拦截、可追溯</strong>：每次取数先过权限关卡，拒绝就真的读不到，每一次判定都留下证据。</p>
+    </div>
+    <div class="topbar__side">
+      <span class="chip">第一阶段进行中</span>
+      <div class="whoami">
+        <span class="whoami__avatar">H</span>
+        <div>
+          <b>hgy</b>
+          <span>操作员</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="col">
+
+      <!-- 问题与机会 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>问题与机会</h2>
+          <span class="hint">为什么做这个</span>
+        </div>
+        <div class="notes" style="counter-reset: none">
+          <p class="muted" style="padding: 0 0 4px; font-size: 13px; line-height: 1.75">
+            企业把 AI 助手接进内部知识库后，AI 往往能"顺手"读到工资表、财务报表这类它本来无权访问的文件——
+            权限判断停留在人的界面上，却没有落在 AI 的取数链路上。
+            <br><br>
+            机会点在于：把 <strong>允许 / 拒绝 / 待审批</strong> 的判定做成文件操作之前的<strong>强制关卡</strong>，
+            并让"拒绝"在证据上可验证——拒绝就是真的没读到。
+          </p>
+        </div>
+      </section>
+
+      <!-- 第一阶段核心目标 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>第一阶段核心目标</h2>
+          <span class="hint">十月交付范围</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14M8 8v9" stroke="currentColor" stroke-width="1.5"/></svg></span>
+            <div>
+              <b>① 文件分类与权限规则</b>
+              <span>普通业务文件、内部财务文件、敏感工资明细三类，制定三种不同的操作规则。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 17 5.5v4.3c0 3.6-2.8 6.4-7 7.7-4.2-1.3-7-4.1-7-7.7V5.5L10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.4 10.2l1.9 1.9 3.4-3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div>
+              <b>② 操作前安全检查</b>
+              <span>在读取文件或导出数据之前，先判断请求是否符合权限规则。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div>
+              <b>③ 三种处理结果</b>
+              <span>ALLOW 允许、DENY 拒绝、PENDING_APPROVAL 待审批。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3.5" width="14" height="13" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 7.5h14M7.5 11h5M7.5 13.8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div>
+              <b>④ 操作日志记录</b>
+              <span>保存请求内容、目标文件、策略判断、处理原因和实际执行结果，便于后续审计。</span>
+            </div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="3.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 17.5h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            <div>
+              <b>⑤ 可交互的演示页面</b>
+              <span>老师可以直接在网页上发起测试，查看系统的处理结果和操作记录。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 系统架构 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>系统架构与模块职责</h2>
+          <span class="hint">第一阶段为纯前端演示</span>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:210px">组件</th>
+                <th style="width:150px">负责人</th>
+                <th>职责</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>演示页面</b> <span class="mono">#console / style.css / app.js</span></td>
+                <td>hgy</td>
+                <td>角色、文件、操作的选择控件与结果展示区，只呈现不判断</td>
+              </tr>
+              <tr>
+                <td><b>权限判断</b> <span class="mono">policy.py</span></td>
+                <td>zyz</td>
+                <td>实现 <span class="mono">check_permission(user_role, file_id, action)</span>，输出三种决策</td>
+              </tr>
+              <tr>
+                <td><b>规则与用例</b> <span class="mono">docs/*.md</span></td>
+                <td>ydn</td>
+                <td>文件清单、权限规则表、测试用例与虚构数据文件</td>
+              </tr>
+              <tr>
+                <td><b>统一入口</b> <span class="mono">POST /api/access</span></td>
+                <td>hgy + zyz</td>
+                <td>接收请求、调用权限函数、执行受控文件操作、写审计日志</td>
+              </tr>
+              <tr>
+                <td><b>审计日志</b> <span class="mono">database.py</span></td>
+                <td>hgy</td>
+                <td>SQLite 存储 9 个字段，提供日志查询与展示</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-note">
+          当前页面为第一阶段前端初稿：判定结果由前端预置演示数据模拟，接入后端策略函数后必须整体移除。
+        </div>
+      </section>
+
+      <!-- 项目路线 -->
+      <section class="card">
+        <div class="card__head">
+          <h2>项目路线</h2>
+          <span class="hint">五个阶段</span>
+        </div>
+        <div class="roadmap">
+          <div class="phase phase--now">
+            <span class="phase__no">阶段 01 · 十月交付</span>
+            <h4>企业内部文件与财务数据访问控制</h4>
+            <p>权限规则、操作前拦截、三种决策、操作日志、可交互演示页面。做完这一阶段拿去找指导老师。</p>
+            <div class="phase__tags">
+              <span class="chipx">文件分类</span>
+              <span class="chipx">操作前检查</span>
+              <span class="chipx">三种决策</span>
+              <span class="chipx">审计日志</span>
+              <span class="chipx">演示页面</span>
+            </div>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 02</span>
+            <h4>操作日志与审计证据管理</h4>
+            <p>把演示级日志升级为可查询、可导出、可核验的审计证据链。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 03</span>
+            <h4>风险识别与关联分析</h4>
+            <p>从访问记录中识别异常行为，关联多源数据形成风险视图。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 04</span>
+            <h4>整改管理与复核</h4>
+            <p>风险项派单、整改跟踪与复核闭环。</p>
+          </div>
+          <div class="phase phase--next">
+            <span class="phase__no">阶段 05</span>
+            <h4>AI 审计辅助与完整展示</h4>
+            <p>用 AI 辅助审计分析与结论生成，形成完整产品展示。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 右列 -->
+    <div class="col col--side">
+
+      <section class="card">
+        <div class="card__head">
+          <h2>审计日志字段</h2>
+          <span class="hint">统一 9 项</span>
+        </div>
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr><th style="width:120px">字段</th><th>含义</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tbl-code">id</td><td>日志唯一编号</td></tr>
+              <tr><td class="tbl-code">timestamp</td><td>请求时间</td></tr>
+              <tr><td class="tbl-code">request_id</td><td>请求关联编号</td></tr>
+              <tr><td class="tbl-code">user_role</td><td>发起请求的角色</td></tr>
+              <tr><td class="tbl-code">file_id</td><td>目标文件编号</td></tr>
+              <tr><td class="tbl-code">action</td><td>read 或 export</td></tr>
+              <tr><td class="tbl-code">decision</td><td>权限决策</td></tr>
+              <tr><td class="tbl-code">reason</td><td>决策原因</td></tr>
+              <tr><td class="tbl-code">executed</td><td>文件操作是否实际执行</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-note">
+          日志必须反映真实结果，不能在程序里把所有记录的 <span class="mono">executed</span> 固定写成 false，也不能根据页面提示随意填写。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>已交付 / 待交付</h2>
+          <span class="hint">1012 – 1016</span>
+        </div>
+        <div class="doclist">
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>演示页面初稿（四页）</b><span class="mono">prototype/#console · #audit · rules.html · about.html</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>样式与交互</b><span class="mono">static/style.css · static/app.js</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M6.8 10.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><b>权限矩阵与测试用例展示</b><span>18 条规则组合 + T001–T008 用例</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.8v6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <div><b>待交付：权限函数对接</b><span>接入 policy.py 与 POST /api/access（阶段二）</span></div>
+          </div>
+          <div class="doclist__item">
+            <span class="doclist__ico"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.8v6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <div><b>待交付：SQLite 审计库</b><span>database.py 与日志查询展示</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>免责说明</h2>
+        </div>
+        <p class="disclaimer" style="border-top: 0">
+          本项目使用虚构企业数据，全部文件内容均为模拟数据，不含真实企业机密或真实个人信息。
+          页面中的权限规则是为演示目的设计的示例策略，不代表所有企业都应采用相同的权限设置。
+          当前为第一阶段前端初稿，判定结果由前端预置演示数据模拟，接入后端策略函数后必须整体移除。
+        </p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../static/app.js"></script>
+</body>
+</html>
